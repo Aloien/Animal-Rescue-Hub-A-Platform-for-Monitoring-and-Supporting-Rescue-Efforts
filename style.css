@@ -1,0 +1,21 @@
+.body{
+    padding: 50px;
+    margin: 0px;
+}
+.container{
+    max-width: 600px;
+    margin: 50px;
+    padding: 50px;
+    box-shadow: rgba(88, 104, 94, 0.493) 0px 7px 29px 0px;
+}
+.form-group{
+    margin-bottom: 20px;
+}
+.btn-green {
+        background-color: rgb(67, 148, 67); /* Set background to green */
+        color: white; /* Set text color to white */
+    }
+.btn-green:hover {
+        background-color: rgb(72, 146, 72); /* Darker green on hover */
+    }
+
