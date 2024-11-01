@@ -21,10 +21,10 @@
                 <input type="password" class="form-control"  name="password" placeholder="Password:">
             </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="repeat_password" placeholder="Repeat_Password:">
+                <input type="text" class="form-control" name="retype_password" placeholder="Retype_Password:">
             </div>
             <div class="form-group">
-                <input type="submit" class="btn-green" value="register" name="submit">
+                <input type="submit" class="btn btn-primary" value="register" name="submit">
             
         </form>
     </div>
