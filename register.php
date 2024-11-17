@@ -1,11 +1,36 @@
-
+<?php
+require 'dbconnection.php';
+if(isset($_POST["submit"])){
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"]; 
+    $password = $_POST["password"];
+    $confirmPassword = $_POST["confirmPassword"];
+    $duplicate = mysqli_query($conn, "SELECT * FROM tb_user WHERE email = '$email'");
+    
+    if(mysqli_num_rows($duplicate) > 0){
+        echo "<script> alert('Email Has Already Been Taken'); </script>";
+    } else {
+        if($password == $confirmPassword){
+            $query = "INSERT INTO tb_user (name, email, phone, password) VALUES ('$name', '$email', '$phone', '$password')";
+            if(mysqli_query($conn, $query)){
+                echo "<script> alert('Registration Successful'); </script>";
+            } else {
+                echo "<script> alert('Error: " . mysqli_error($conn) . "'); </script>";
+            }
+        } else {
+            echo "<script> alert('Password Does Not Match'); </script>";
+        }
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>s
+    <title>User Registration</title>
 </head> 
 <body>
 
@@ -26,12 +51,24 @@
     <label for="confirmPassword">Confirm Password:</label><br>
     <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required><br><br>
         
-    <input type="submit" value="Register">
+    <input type="submit" name="submit" value="Register">
 </form>
 
 <hr>
 
 <p>Already have an account? <a href="login.php">Login here</a></p>
+
+<script>
+function validateForm() {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('confirmPassword').value;
+    if (password != confirmPassword) {
+        alert('Password does not match');
+        return false;
+    }
+    return true;
+}
+</script>
 
 </body>
 </html>
