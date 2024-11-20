@@ -1,20 +1,29 @@
 <?php
-require 'dbconnection.php';
+require 'classes/dbconnection.php'; 
+require 'classes/user_management.php'; 
 session_start();
 
 if(isset($_POST["submit"])){
-    $email = $_POST["loginEmail"];
-    $password = $_POST["loginPassword"];
-    
-    // Query to check if the user exists
-    $query = "SELECT * FROM tb_user WHERE email = '$email' AND password = '$password'";
-    $result = mysqli_query($conn, $query);
+    $db = new Database();
+    $conn = $db->getConnect();
+    $email = htmlspecialchars($_POST["loginEmail"], ENT_QUOTES, 'UTF-8');
+    $password = htmlspecialchars($_POST["loginPassword"], ENT_QUOTES, 'UTF-8');
 
-    if(mysqli_num_rows($result) > 0){
-        // User found, start the session
+    $admin = new Admin($conn);
+    $user = new User($conn);
+
+    if ($admin_user = $admin->login($email, $password)) {
+        // Admin login successful
+        $_SESSION["adminEmail"] = $email;
+        $_SESSION["role"] = 'admin';
+        echo "<script> alert('Admin Login Successful'); </script>";
+        header("Location: admin_dashboard.php");
+        exit();
+    } elseif ($regular_user = $user->login($email, $password)) {
+        // User login successful
         $_SESSION["loginEmail"] = $email;
+        $_SESSION["role"] = 'user';
         echo "<script> alert('Login Successful'); </script>";
-        // Redirect to a secure page (e.g., dashboard.php)
         header("Location: dashboard.php");
         exit();
     } else {

@@ -8,7 +8,7 @@
 <body>
     <nav>
         <div style="text-align: right;">
-            <a href="login.php">Log In</a> | <a href="register.php">Register</a>
+            <a href="login.php">Log In</a> | <a href="register.phpZ">Register</a>
         </div>
     </nav>
 

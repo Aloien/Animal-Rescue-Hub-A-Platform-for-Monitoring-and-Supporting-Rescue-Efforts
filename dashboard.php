@@ -13,11 +13,28 @@ if(!isset($_SESSION["loginEmail"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Animal Rescue Hub</title>
 </head>
 <body>
-<h2>Welcome to Your Dashboard</h2>
-<p>Hello, <?php echo $_SESSION["loginEmail"]; ?>! You are logged in.</p>
-<a href="logout.php">Logout</a>
+    <header>
+        <h1>Welcome to Animal Rescue Hub</h1>
+    </header>
+    <div style="display: flex;">
+        <nav style="width: 20%;">
+            <ul style="list-style-type: none; padding: 0;">
+                <li><a href="#incident">Incident</a></li>
+                <li><a href="#volunteer">Volunteer</a></li>
+                <li><a href="#adoption">Adoption</a></li>
+                <li><a href="#report">Report</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+        <main style="width: 80%;">
+            
+            <div style="background-image: url('path_to_animal_image.jpg'); height: 500px; background-size: cover;">
+                
+            </div>
+        </main>
+    </div>
 </body>
 </html>
