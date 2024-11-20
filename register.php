@@ -1,32 +1,40 @@
 <?php
-require 'dbconnection.php';
-if(isset($_POST["submit"])){
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $phone = $_POST["phone"]; 
-    $password = $_POST["password"];
-    $confirmPassword = $_POST["confirmPassword"];
-    $duplicate = mysqli_query($conn, "SELECT * FROM tb_user WHERE email = '$email'");
-    if(mysqli_num_rows($duplicate) > 0){
-        echo
-        "<script> alert('Email Has Already Been Taken'); </script>";
+require 'classes/dbconnection.php';
+
+if (isset($_POST["submit"])) {
+    $db = new Database();
+    $conn = $db->getConnect();
+
+    $name = htmlspecialchars($_POST["name"], ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars($_POST["email"], ENT_QUOTES, 'UTF-8');
+    $phone = htmlspecialchars($_POST["phone"], ENT_QUOTES, 'UTF-8');
+    $password = htmlspecialchars($_POST["password"], ENT_QUOTES, 'UTF-8');
+    $confirmPassword = htmlspecialchars($_POST["confirmPassword"], ENT_QUOTES, 'UTF-8');
+
+    if ($password !== $confirmPassword) {
+        echo "<script> alert('Passwords do not match'); </script>";
+        exit();
     }
-    else{
-        if($password == $confirmPassword){
-            $query = "INSERT INTO tb_user (name, email, password) VALUES ('$name', '$email', '$password')";
-            mysqli_query($conn, $query);
-            echo
-            "<script> alert('Registration Successful'); </script>";
-            
-        }
-        else {
-            echo
-            "<script> alert('Password Does Not Match'); </script>";
+
+    // Check for duplicate email
+    $query = "SELECT * FROM tb_user WHERE email = :email";
+    $stmt = $conn->prepare($query);
+    $stmt->execute(['email' => $email]);
+    $duplicate = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($duplicate) {
+        echo "<script> alert('Email Has Already Been Taken'); </script>";
+    } else {
+        $query = "INSERT INTO tb_user (name, email, phone, password) VALUES (:name, :email, :phone, :password)";
+        $stmt = $conn->prepare($query);
+        if ($stmt->execute(['name' => $name, 'email' => $email, 'phone' => $phone, 'password' => $password])) {
+            echo "<script> alert('Registration Successful'); </script>";
+        } else {
+            echo "<script> alert('Error: " . $stmt->errorInfo()[2] . "'); </script>";
         }
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -35,6 +43,17 @@ if(isset($_POST["submit"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    <script>
+        function validateForm() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head> 
 <body>
 
@@ -46,7 +65,7 @@ if(isset($_POST["submit"])){
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" placeholder="Email" required><br><br>
 
-    <label for="phone">Phone sNumber:</label><br>
+    <label for="phone">Phone Number:</label><br>
     <input type="tel" id="phone" name="phone" placeholder="Phone Number" required><br><br>
     
     <label for="password">Password:</label><br>
@@ -55,7 +74,7 @@ if(isset($_POST["submit"])){
     <label for="confirmPassword">Confirm Password:</label><br>
     <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required><br><br>
         
-    <input type="submit" value="Register">
+    <input type="submit" name="submit" value="Register">
 </form>
 
 <hr>

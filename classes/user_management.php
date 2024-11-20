@@ -12,7 +12,13 @@ class User {
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($user && password_verify($password, $user['password'])){
+        if ($user) {
+            echo "<script> console.log('User found: ', " . json_encode($user) . "); </script>";
+        } else {
+            echo "<script> console.log('User not found'); </script>";
+        }
+
+        if ($user && $password == $user['password']) {
             return $user;
         }
         return false;
@@ -24,7 +30,6 @@ class Admin extends User {
     private $admin_password = 'admin';
 
     public function login($email, $password) {
-        // Admin login check
         if ($email === $this->admin_email && $password === $this->admin_password) {
             return [
                 'email' => $this->admin_email,
@@ -32,7 +37,6 @@ class Admin extends User {
             ];
         }
 
-        // Check in database
         $user = parent::login($email, $password);
         if ($user && $user['role'] === 'admin') {
             return $user;
