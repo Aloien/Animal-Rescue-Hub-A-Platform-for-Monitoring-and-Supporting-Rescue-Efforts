@@ -1,32 +1,56 @@
+<?php
+require 'classes/dbconnection.php'; 
+require 'classes/user_management.php'; 
+session_start();
+
+if(isset($_POST["submit"])){
+    $db = new Database();
+    $conn = $db->getConnect();
+    $email = htmlspecialchars($_POST["loginEmail"], ENT_QUOTES, 'UTF-8');
+    $password = htmlspecialchars($_POST["loginPassword"], ENT_QUOTES, 'UTF-8');
+
+    $admin = new Admin($conn);
+    $user = new User($conn);
+
+    if ($admin_user = $admin->login($email, $password)) {
+        // Admin login successful
+        $_SESSION["adminEmail"] = $email;
+        $_SESSION["role"] = 'admin';
+        echo "<script> alert('Admin Login Successful'); </script>";
+        header("Location: admin_dashboard.php");
+        exit();
+    } elseif ($regular_user = $user->login($email, $password)) {
+        // User login successful
+        $_SESSION["loginEmail"] = $email;
+        $_SESSION["role"] = 'user';
+        echo "<script> alert('Login Successful'); </script>";
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        echo "<script> alert('Incorrect Email or Password'); </script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <title>User Login</title>
 </head>
 <body>
-    <div class="container">
-        <form action="registration.php" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="fullname" placeholder="Full Name:">
-            </div>
-              <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email:">
-            </div>
-              <div class="form-group">
-                <input type="password" class="form-control"  name="password" placeholder="Password:">
-            </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="retype_password" placeholder="Retype_Password:">
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="register" name="submit">
-            
-        </form>
-    </div>
+<h2>Login</h2>
+<form action="login.php" method="post">
+    <label for="loginEmail">Email:</label><br>
+    <input type="email" id="loginEmail" name="loginEmail" placeholder="Email" required><br><br>
+    
+    <label for="loginPassword">Password:</label><br>
+    <input type="password" id="loginPassword" name="loginPassword" placeholder="Password" required><br><br>
+    
+    <input type="submit" name="submit" value="Login">
+</form>
+<hr>
+<p>Don't have an account? <a href="register.php">Register here</a></p>
 </body>
 </html>
