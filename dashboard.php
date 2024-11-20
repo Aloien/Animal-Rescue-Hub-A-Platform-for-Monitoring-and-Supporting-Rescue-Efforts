@@ -18,6 +18,7 @@ if(!isset($_SESSION["loginEmail"])) {
 <body>
     <header>
         <h1>Welcome to Animal Rescue Hub</h1>
+        
     </header>
     <div style="display: flex;">
         <nav style="width: 20%;">
@@ -28,9 +29,13 @@ if(!isset($_SESSION["loginEmail"])) {
                 <li><a href="#report">Report</a></li>
                 <li><a href="#contact">Contact Us</a></li>
             </ul>
+            <nav>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="display: inline;"><a href="logout.php">Logout</a></li>
+            </ul>
+        </nav>
         </nav>
         <main style="width: 80%;">
-            
             <div style="background-image: url('path_to_animal_image.jpg'); height: 500px; background-size: cover;">
                 
             </div>
