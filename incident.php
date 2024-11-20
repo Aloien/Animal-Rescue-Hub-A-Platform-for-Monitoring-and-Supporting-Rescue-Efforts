@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incident Reporting Page</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             display: flex;
@@ -43,7 +53,7 @@
     <h1>Incident Report</h1>
     
     <!-- Add Incident Form -->
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="createIncident.php" method="post" enctype="multipart/form-data">
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" required>
         
@@ -63,20 +73,55 @@
     </form>
     
     <!-- Incidents Table -->
-    <table>
+    <?php
+    // Include the database connection and incident classes
+    require_once 'dbConnection.php';
+
+    // Create a new instance of the Database class
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnect();
+
+    // Create a new instance of the Incident class with the database connection
+    $incident = new Incident($db);
+    // Fetch all incidents from the database
+    $stmt = $incident->read();
+    ?>
+
+    <table id="incidentTable">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Animal Type</th>
                 <th>Location</th>
                 <th>Date</th>
                 <th>Description</th>
-                <th>Status</th>
                 <th>Image</th>
             </tr>
         </thead>
         <tbody>
-        
+            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['animal_type']); ?></td>
+                    <td><?php echo htmlspecialchars($row['location']); ?></td>
+                    <td><?php echo htmlspecialchars($row['date']); ?></td>
+                    <td><?php echo htmlspecialchars($row['description']); ?></td>
+                    <td>
+                        <?php if ($row['image']): ?>
+                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Incident Image" style="max-width: 100px;">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
         </tbody>
     </table>
+
+    <script>
+        // Initialize DataTables plugin for the incidents table
+        $(document).ready(function() {
+            $('#incidentTable').DataTable();
+        });
+    </script>
 </body>
 </html>
