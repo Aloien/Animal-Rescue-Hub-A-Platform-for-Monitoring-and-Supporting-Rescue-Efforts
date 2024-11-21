@@ -54,7 +54,7 @@ class Incident { // Encapsulation
     }
 
     public function read() { // Abstraction
-        $query = "SELECT * FROM " . $this->tbl_name;
+        $query = "SELECT id, animal_type, location, date, description, image FROM " . $this->tbl_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
