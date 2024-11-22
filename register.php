@@ -36,13 +36,29 @@ if (isset($_POST["submit"])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #0c969d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            padding: 30px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
     <script>
         function validateForm() {
             var password = document.getElementById('password').value;
@@ -54,32 +70,35 @@ if (isset($_POST["submit"])) {
             return true;
         }
     </script>
-</head> 
+</head>
 <body>
-
-<h2>Register</h2>
-<form action="register.php" method="post" onsubmit="return validateForm()">
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" placeholder="Name" required><br><br>
-    
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" placeholder="Email" required><br><br>
-
-    <label for="phone">Phone Number:</label><br>
-    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required><br><br>
-    
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" placeholder="Password" required><br><br>
-
-    <label for="confirmPassword">Confirm Password:</label><br>
-    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required><br><br>
-        
-    <input type="submit" name="submit" value="Register">
-</form>
-
-<hr>
-
-<p>Already have an account? <a href="login.php">Login here</a></p>
-
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Register</h2>
+        <form action="register.php" method="post" onsubmit="return validateForm()">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+        <hr>
+        <p class="text-center">Already have an account? <a href="login.php">Login here</a></p>
+    </div>
 </body>
 </html>
