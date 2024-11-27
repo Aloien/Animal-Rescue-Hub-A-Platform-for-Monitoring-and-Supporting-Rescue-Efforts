@@ -1,9 +1,25 @@
+<?php
+// Include the database connection and incident classes
+require_once 'classes/dbConnection.php';
+require_once 'classes/Incident.php';
+
+// Create a new instance of the Database class
+$database = new Database();
+// Get the database connection
+$db = $database->getConnect();
+
+// Create a new instance of the Incident class with the database connection
+$incident = new Incident($db);
+// Fetch all incidents from the database
+$stmt = $incident->read();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Incident Reporting Page</title>
+    <title>Incident Report</title>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <!-- jQuery -->
@@ -51,8 +67,7 @@
 </head>
 <body>
     <h1>Incident Report</h1>
-    
-    <!-- Add Incident Form -->
+
     <form action="createIncident.php" method="post" enctype="multipart/form-data">
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" required>
@@ -69,25 +84,16 @@
         <label for="image">Image:</label>
         <input type="file" id="image" name="image">
         
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="pending">Pending</option>
+            <option value="rescued">Rescued</option>
+        </select>
+        
         <button type="submit">Report Incident</button>
     </form>
     
     <!-- Incidents Table -->
-    <?php
-    // Include the database connection and incident classes
-    require_once 'dbConnection.php';
-
-    // Create a new instance of the Database class
-    $database = new Database();
-    // Get the database connection
-    $db = $database->getConnect();
-
-    // Create a new instance of the Incident class with the database connection
-    $incident = new Incident($db);
-    // Fetch all incidents from the database
-    $stmt = $incident->read();
-    ?>
-
     <table id="incidentTable">
         <thead>
             <tr>
@@ -97,6 +103,7 @@
                 <th>Date</th>
                 <th>Description</th>
                 <th>Image</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -108,10 +115,11 @@
                     <td><?php echo htmlspecialchars($row['date']); ?></td>
                     <td><?php echo htmlspecialchars($row['description']); ?></td>
                     <td>
-                        <?php if ($row['image']): ?>
+                        <?php if (!empty($row['image'])): ?>
                             <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Incident Image" style="max-width: 100px;">
                         <?php endif; ?>
                     </td>
+                    <td><?php echo htmlspecialchars($row['status']); ?></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
