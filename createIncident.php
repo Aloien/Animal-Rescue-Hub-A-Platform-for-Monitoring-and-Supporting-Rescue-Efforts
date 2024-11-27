@@ -1,6 +1,7 @@
 <?php
 // Include the database connection and incident classes
-require_once 'dbConnection.php';
+require_once 'classes/dbConnection.php';
+require_once 'classes/Incident.php';
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $incident->location = htmlspecialchars(trim($_POST['location']));
     $incident->date = htmlspecialchars(trim($_POST['date']));
     $incident->description = htmlspecialchars(trim($_POST['description']));
+    $incident->status = htmlspecialchars(trim($_POST['status'])); // Add status field
 
     // Check if an image file was uploaded without errors
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
