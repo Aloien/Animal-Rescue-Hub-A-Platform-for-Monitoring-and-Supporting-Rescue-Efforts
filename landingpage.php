@@ -9,18 +9,67 @@
     <style>
         body {
             padding-top: 56px;
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background-color: #032f30;
+        }
+        .navbar-brand {
+            color: #6ba3be;
+            font-weight: bold;
+        }
+        .navbar-brand:hover {
+            color: #0c969c;
+        }
+        .nav-link {
+            color: #6ba3be;
+        }
+        .nav-link:hover {
+            color: #0c969c;
         }
         .jumbotron {
             background-image: url('wildlife-header.jpg');
             background-size: cover;
             background-position: center;
-            color: white;
+            color: #f5f5f5;
+            text-shadow: 1px 1px 2px black;
+        }
+        .section-title {
+            margin-bottom: 40px;
+            font-weight: bold;
+            color: #032f30;
+        }
+        .btn-primary {
+            background-color: #0a7075;
+            border-color: #0a7075;
+        }
+        .btn-primary:hover {
+            background-color: #0c969c;
+            border-color: #0c969c;
+        }
+        .btn-secondary {
+            background-color: #274d60;
+            border-color: #274d60;
+        }
+        .btn-secondary:hover {
+            background-color: #032f30;
+            border-color: #032f30;
+        }
+        footer {
+            background-color: #032f30;
+            color: #f5f5f5;
+        }
+        footer a {
+            color: #6ba3be;
+        }
+        footer a:hover {
+            color: #0c969c;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">Animal Rescue Hub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,18 +99,18 @@
     <!-- Main Content -->
     <main class="container">
         <section class="my-5">
-            <h2 class="text-center">Our Mission</h2>
+            <h2 class="text-center section-title">Our Mission</h2>
             <p class="text-center">We aim to rescue, rehabilitate, and rehome animals in need. Join our community and help us create a better world for our furry friends.</p>
         </section>
         <section class="my-5">
-            <h2 class="text-center">Adopt a Pet</h2>
+            <h2 class="text-center section-title">Adopt a Pet</h2>
             <p class="text-center">Find your new best friend from our wide selection of rescued animals. Each one is looking for a loving home just like yours.</p>
             <div class="text-center">
                 <a href="adopt.html" class="btn btn-primary">Browse Animals</a>
             </div>
         </section>
         <section class="my-5">
-            <h2 class="text-center">Support Us</h2>
+            <h2 class="text-center section-title">Support Us</h2>
             <p class="text-center">We rely on the generosity of our supporters. Learn how you can donate, volunteer, or participate in our fundraising events.</p>
             <div class="text-center">
                 <a href="support.html" class="btn btn-secondary">Learn More</a>
@@ -70,13 +119,18 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-4 bg-light">
+    <footer class="py-4">
         <div class="container">
-            <p class="m-0 text-center text-muted">&copy; 2024 Animal Rescue Hub. All rights reserved.</p>
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="m-0">&copy; 2024 Animal Rescue Hub. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a>
+                </div>
+            </div>
         </div>
     </footer>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>

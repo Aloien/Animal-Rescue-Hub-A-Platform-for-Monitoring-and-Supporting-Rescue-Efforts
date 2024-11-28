@@ -109,7 +109,7 @@ if(!isset($_SESSION["loginEmail"])) {
                 <ul>
                     <li><button onclick="location.href='#incident'">Incident</button></li>
                     <li><button onclick="location.href='#adoption'">Adoption</button></li>
-                    <li><button onclick="location.href='#overview'">Overview</button></li>
+                    <li><button onclick="location.href='overview.php'">Overview</button></li>
                     <li><button onclick="location.href='#contact'">Contact Us</button></li>
                 </ul>
                 <ul class="list-unstyled position-absolute bottom-0">
