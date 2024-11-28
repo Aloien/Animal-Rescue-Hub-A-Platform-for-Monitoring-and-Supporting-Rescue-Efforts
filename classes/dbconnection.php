@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "incident_reports";
+    private $db_name = "animal_rescue_hub";
     private $username = "root";
     private $password = "";
     public $conn;
