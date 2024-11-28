@@ -1,12 +1,12 @@
 <?php
-class Database { // Encapsulation
-    private $host = "localhost"; // Encapsulation
-    private $db_name = "incident_reports"; // Encapsulation
-    private $username = "root"; // Encapsulation
-    private $password = ""; // Encapsulation
-    public $conn; // Encapsulation
+class Database {
+    private $host = "localhost";
+    private $db_name = "animal_rescue_hub";
+    private $username = "root";
+    private $password = "";
+    public $conn;
 
-    public function getConnect() { // Abstraction
+    public function getConnect() {
         $this->conn = null;
 
         try {
@@ -20,4 +20,3 @@ class Database { // Encapsulation
         return $this->conn;
     }
 }
-

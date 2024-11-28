@@ -34,7 +34,7 @@ class Incident {
     }
 
     public function read() {
-        $query = "SELECT id, animal_type, location, date, description, image, status FROM " . $this->tbl_name;
+        $query = "SELECT * FROM " . $this->tbl_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 

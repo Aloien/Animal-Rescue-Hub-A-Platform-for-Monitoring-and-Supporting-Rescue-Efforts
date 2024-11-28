@@ -1,15 +1,14 @@
 <?php
-// Include the database connection and incident classes
 require_once 'classes/dbConnection.php';
-require_once 'classes/Incident.php';
+require_once 'classes/Incident_management.php';
 
 // Create a new instance of the Database class
 $database = new Database();
-// Get the database connection
 $db = $database->getConnect();
 
 // Create a new instance of the Incident class with the database connection
 $incident = new Incident($db);
+
 // Fetch all incidents from the database
 $stmt = $incident->read();
 ?>
