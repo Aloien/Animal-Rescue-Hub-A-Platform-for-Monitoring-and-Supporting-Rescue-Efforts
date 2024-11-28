@@ -1,7 +1,0 @@
-{
-    "html.autoCreateQuotes": true,
-    "emmet.includeLanguages": {
-        "vue-html": "html",
-        "javascript": "javascriptreact"
-    }
-}

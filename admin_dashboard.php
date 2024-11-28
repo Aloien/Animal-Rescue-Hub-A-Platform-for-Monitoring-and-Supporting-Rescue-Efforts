@@ -87,6 +87,11 @@ $users = $crud->getUsers();
                 ?>
             </tbody>
         </table>
+        
+    </div>
+    <div>
+    <h2>Add Animal</h2>
+    <a href="animal/animal_forms.php"><button>Add Animal</button></a>
     </div>
 </body>
 </html>
