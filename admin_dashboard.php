@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-// Check if the user is logged in and is an admin
-if(!isset($_SESSION["adminEmail"])) {
+// Check if the user is logged in as admin
+if (!isset($_SESSION["adminEmail"])) {
     header("Location: login.php");
     exit();
 }
@@ -28,9 +28,9 @@ $users = $crud->getUsers();
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <!-- SweetAlert2 JS --> 
+    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-     
+
     <script>
         $(document).ready(function() {
             $('#userTable').DataTable();
@@ -54,6 +54,7 @@ $users = $crud->getUsers();
 
     <div class="container mt-4">
         <h2>Users List</h2>
+        <a href="create.php" class="btn btn-primary mb-3">Create New User</a>
         <table id="userTable" class="table table-striped display">
             <thead>
                 <tr>

@@ -1,5 +1,6 @@
 <?php
 require 'classes/dbconnection.php';
+require 'classes/user_management.php'; // Include the User class
 
 if (isset($_POST["submit"])) {
     $db = new Database();
@@ -25,9 +26,11 @@ if (isset($_POST["submit"])) {
     if ($duplicate) {
         echo "<script> alert('Email Has Already Been Taken'); </script>";
     } else {
-        $query = "INSERT INTO tb_user (name, email, phone, password) VALUES (:name, :email, :phone, :password)";
-        $stmt = $conn->prepare($query);
-        if ($stmt->execute(['name' => $name, 'email' => $email, 'phone' => $phone, 'password' => $password])) {
+        $user = new User($conn);
+        $user->setName($name);
+        $user->setEmail($email);
+        $user->setPassword($password);
+        if ($user->create()) {
             echo "<script> alert('Registration Successful'); </script>";
         } else {
             echo "<script> alert('Error: " . $stmt->errorInfo()[2] . "'); </script>";
@@ -57,6 +60,23 @@ if (isset($_POST["submit"])) {
             background: white;
             border-radius: 30px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #032f30;
+        }
+        .btn-primary {
+            background-color: #0a7075;
+            border-color: #0a7075;
+        }
+        .btn-primary:hover {
+            background-color: #032f30;
+            border-color: #032f30;
+        }
+        a {
+            color: #274d60;
+        }
+        a:hover {
+            color: #6ba3be;
         }
     </style>
     <script>
@@ -100,5 +120,6 @@ if (isset($_POST["submit"])) {
         <hr>
         <p class="text-center">Already have an account? <a href="login.php">Login here</a></p>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-OMQNB0lQJbWb1D/SIdN++0CUWuvPrNLAHEQRWzFnw2vM3FA1MYIjPUxDSA3lg7kl" crossorigin="anonymous"></script>
 </body>
 </html>
