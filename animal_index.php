@@ -1,18 +1,37 @@
+<?php
+require_once 'animal_database.php';
+
+
+$database = new Database();
+$db = $database->getConnect();
+
+
+$animal = new Animals($db);
+$stmt = $animal->read();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animal List</title>
 
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
@@ -23,37 +42,13 @@
             font-family: Arial, sans-serif;
         }
 
-        form,
+
         table {
             width: 80%;
             margin: 20px 0;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: auto;
-        }
-
-        label,
-        input,
-        textarea,
-        button {
-            margin: 10px 0;
-        }
-
-        input,
-        textarea,
-        button {
-            max-width: 300px;
-            width: 100%;
-            padding: 5px;
-        }
-
-        table {
             border-collapse: collapse;
         }
+
 
         th,
         td {
@@ -64,23 +59,12 @@
     </style>
 </head>
 
+
 <body>
 
 
-    <?php
-
-    require_once 'animal_database.php';
-
-    $database = new Database();
-
-    $db = $database->getConnect();
-
-    $animal = new Animals($db);
-
-    $stmt = $animal->read();
-    ?>
-
     <h2>Animal List</h2>
+
 
     <table id="animalTable">
         <thead>
@@ -91,6 +75,7 @@
                 <th>Age</th>
                 <th>Description</th>
                 <th>Image</th>
+                <th>Status</th> <!-- Add status column -->
             </tr>
         </thead>
         <tbody>
@@ -103,13 +88,15 @@
                     <td><?php echo htmlspecialchars($row['description']); ?></td>
                     <td>
                         <?php if ($row['image']): ?>
-                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Incident Image" style="max-width: 100px;">
+                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image" style="max-width: 100px;">
                         <?php endif; ?>
                     </td>
+                    <td><?php echo htmlspecialchars($row['status']); ?></td> <!-- Display status -->
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
+
 
     <script>
         $(document).ready(function() {
@@ -118,5 +105,6 @@
     </script>
     <a href="animal_forms.php"><button>Add Animal</button></a>
 </body>
+
 
 </html>
