@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "reglog";
+    private $db_name = "incident_reports";
     private $username = "root";
     private $password = "";
     public $conn;
