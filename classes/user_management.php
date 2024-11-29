@@ -7,6 +7,7 @@ class User {
     private $name;
     private $email;
     private $password;
+    private $phone;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -24,12 +25,17 @@ class User {
 
     public function setPassword($password) { $this->password = htmlspecialchars(strip_tags($password)); }
 
+    public function setPhone($phone) {
+        $this->phone = $phone;
+    }
+
     // Create new user
     public function create() {
-        $query = "INSERT INTO " . $this->tbl_name . " (name, email, password) VALUES (:name, :email, :password)";
-        $stmt = $this->conn->prepare($query);  // Corrected line
+        $query = "INSERT INTO " . $this->tbl_name . " (name, email, phone, password) VALUES (:name, :email, :phone, :password)";
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':phone', $this->phone);
         $stmt->bindParam(':password', $this->password);
 
         return $stmt->execute();

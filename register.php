@@ -1,6 +1,6 @@
 <?php
 require 'classes/dbconnection.php';
-require 'classes/user_management.php'; // Include the User class
+require 'classes/user_management.php'; 
 
 if (isset($_POST["submit"])) {
     $db = new Database();
@@ -29,6 +29,7 @@ if (isset($_POST["submit"])) {
         $user = new User($conn);
         $user->setName($name);
         $user->setEmail($email);
+        $user->setPhone($phone);
         $user->setPassword($password);
         if ($user->create()) {
             echo "<script> alert('Registration Successful'); </script>";
