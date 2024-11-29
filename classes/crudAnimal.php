@@ -11,7 +11,7 @@ class Animals
     public $age;
     public $description;
     public $image;
-    public $status; // Add status property
+    public $status;
 
 
     public function __construct($db)
@@ -20,29 +20,29 @@ class Animals
     }
 
 
+    // Create a new animal entry
     public function create()
     {
-        $query = "INSERT INTO " . $this->tbl_name . " (animal, species, age, description, image, status) VALUES (:animal, :species, :age, :description, :image, :status)";
+        $query = "INSERT INTO " . $this->tbl_name . " (animal, species, age, description, image, status) 
+                  VALUES (:animal, :species, :age, :description, :image, :status)";
         $stmt = $this->conn->prepare($query);
 
 
+        // Bind parameters
         $stmt->bindParam(':animal', $this->animal);
         $stmt->bindParam(':species', $this->species);
         $stmt->bindParam(':age', $this->age);
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':image', $this->image);
-        $stmt->bindParam(':status', $this->status); // Bind status parameter
+        $stmt->bindParam(':status', $this->status);
 
 
-        if ($stmt->execute()) {
-            return true;
-        }
-
-
-        return false;
+        // Execute the query
+        return $stmt->execute();
     }
 
 
+    // Retrieve all animal entries
     public function read()
     {
         $query = "SELECT * FROM " . $this->tbl_name;
@@ -51,6 +51,39 @@ class Animals
 
 
         return $stmt;
+    }
+
+
+    // Update an animal entry by ID
+    public function update($id)
+    {
+        $query = "UPDATE " . $this->tbl_name . " 
+                  SET animal = :animal, species = :species, age = :age, description = :description, image = :image, status = :status 
+                  WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+
+        // Bind parameters
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':animal', $this->animal);
+        $stmt->bindParam(':species', $this->species);
+        $stmt->bindParam(':age', $this->age);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':image', $this->image);
+        $stmt->bindParam(':status', $this->status);
+
+
+        // Execute the query
+        return $stmt->execute();
+    }
+
+
+    // Delete an animal entry by ID
+    public function delete($id)
+    {
+        $query = "DELETE FROM " . $this->tbl_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute(['id' => $id]);
     }
 }
 ?>

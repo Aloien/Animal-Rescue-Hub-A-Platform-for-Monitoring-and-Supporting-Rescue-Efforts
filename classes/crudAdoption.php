@@ -32,11 +32,7 @@ class Adoption
         $stmt->bindParam(':pet_type', $this->pet_type);
 
         // Execute the query
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        return $stmt->execute();
     }
 
     // Retrieve all adoption form entries
@@ -45,9 +41,35 @@ class Adoption
         $query = "SELECT * FROM " . $this->tbl_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-
         return $stmt;
     }
-}
 
+    // Update an adoption form entry by ID
+    public function update($id)
+    {
+        $query = "UPDATE " . $this->tbl_name . " 
+                  SET name = :name, gender = :gender, contact = :contact, monthly_salary = :monthly_salary, pet_type = :pet_type 
+                  WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':gender', $this->gender);
+        $stmt->bindParam(':contact', $this->contact);
+        $stmt->bindParam(':monthly_salary', $this->monthly_salary);
+        $stmt->bindParam(':pet_type', $this->pet_type);
+
+        // Execute the query
+        return $stmt->execute();
+    }
+
+    // Delete an adoption form entry by ID
+    public function delete($id)
+    {
+        $query = "DELETE FROM " . $this->tbl_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute(['id' => $id]);
+    }
+}
 ?>
