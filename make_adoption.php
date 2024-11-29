@@ -1,6 +1,8 @@
 <?php
 
-require_once 'classes/animal_database.php'; // Include the database connection file
+require_once 'classes/dbConnection.php';
+require_once 'classes/crudAdoption.php';
+require_once 'classes/crudAnimal.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

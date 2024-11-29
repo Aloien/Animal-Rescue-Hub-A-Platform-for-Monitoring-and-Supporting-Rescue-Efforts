@@ -1,6 +1,7 @@
 <?php
-require_once 'classes/animal_database.php';
-
+require_once 'classes/dbConnection.php';
+require_once 'classes/crudAdoption.php';
+require_once 'classes/crudAnimal.php';
 $database = new Database();
 $db = $database->getConnect();
 
