@@ -27,7 +27,7 @@ class User {
     // Create new user
     public function create() {
         $query = "INSERT INTO " . $this->tbl_name . " (name, email, password) VALUES (:name, :email, :password)";
-        $stmt = $this->conn->prepare($query);  // Corrected line
+        $stmt = $this->conn->prepare($query); 
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':password', $this->password);
