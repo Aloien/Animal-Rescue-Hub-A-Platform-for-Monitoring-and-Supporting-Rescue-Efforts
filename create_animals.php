@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (in_array($_FILES['image']['type'], $allowedTypes) && $_FILES['image']['size'] <= $maxSize) {
 
 
-            $targetDir = "images/";
+            $targetDir = "animalImages/";
 
 
             $targetFile = $targetDir . basename($_FILES["image"]["name"]);
