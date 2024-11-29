@@ -1,5 +1,5 @@
 <?php
-require_once 'animal_database.php';
+require_once 'classes/animal_database.php';
 
 $database = new Database();
 $db = $database->getConnect();
@@ -113,3 +113,4 @@ $stmt->execute();
 </body>
 
 </html>
+

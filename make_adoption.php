@@ -1,6 +1,6 @@
 <?php
 
-require_once 'animal_database.php'; // Include the database connection file
+require_once 'classes/animal_database.php'; // Include the database connection file
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

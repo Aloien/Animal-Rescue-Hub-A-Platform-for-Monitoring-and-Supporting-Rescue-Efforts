@@ -1,6 +1,24 @@
+
+<?php
+
+
+require_once 'classes/animal_database.php';
+
+
+$database = new Database();
+
+
+$db = $database->getConnect();
+
+
+$animal = new Animals($db);
+
+
+$stmt = $animal->read();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8">
@@ -117,21 +135,3 @@
 
 </html>
 
-
-<?php
-
-
-require_once 'animal_database.php';
-
-
-$database = new Database();
-
-
-$db = $database->getConnect();
-
-
-$animal = new Animals($db);
-
-
-$stmt = $animal->read();
-?>
