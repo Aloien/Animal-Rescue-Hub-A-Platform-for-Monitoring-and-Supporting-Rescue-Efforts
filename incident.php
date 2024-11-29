@@ -56,11 +56,20 @@ $stmt = $incident->read();
         }
         table {
             border-collapse: collapse;
+            width: 100%;
         }
         th, td {
             padding: 10px;
             text-align: left;
             border: 1px solid #ddd;
+        }
+        @media (max-width: 600px) {
+            form, table {
+                width: 100%;
+            }
+            input, textarea, button {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -129,6 +138,15 @@ $stmt = $incident->read();
         $(document).ready(function() {
             $('#incidentTable').DataTable();
         });
+
+        // Check if the incident was created successfully
+        <?php if (isset($_GET['success']) && $_GET['success'] == 'true'): ?>
+            Swal.fire({
+                title: 'Incident created successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        <?php endif; ?>
     </script>
 </body>
 </html>
