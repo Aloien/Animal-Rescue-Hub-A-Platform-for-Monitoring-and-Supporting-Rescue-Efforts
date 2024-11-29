@@ -104,7 +104,7 @@ $stmt = $animal->read();
             $('#animalTable').DataTable();
         });
     </script>
-    <a href="animal_forms.php"><button>Add Animal</button></a>
+    <a href="animalForms.php"><button>Add Animal</button></a>
 </body>
 
 

@@ -96,7 +96,7 @@ $stmt->execute();
                         <?php endif; ?>
                     </td>
                     <td>
-                        <form action="adoption_forms.php" method="GET">
+                        <form action="adoptionForms.php" method="GET">
                             <input type="hidden" name="animal_id" value="<?php echo htmlspecialchars($row['id']); ?>">
                             <button type="submit">Adopt</button>
                         </form>
