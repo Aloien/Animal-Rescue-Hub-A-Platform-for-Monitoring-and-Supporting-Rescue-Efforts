@@ -1,3 +1,20 @@
+<?php
+
+
+require_once 'classes/animal_database.php';
+
+
+$database = new Database();
+
+
+$db = $database->getConnect();
+
+
+$animal = new Animals($db);
+
+
+$stmt = $animal->read();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
