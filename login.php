@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
         // Admin login successful
         $_SESSION["adminEmail"] = $admin_user['email'];
         $_SESSION["role"] = 'admin';
-        header("Location: admin_dashboard.php");
+        header("Location: adminDashboard.php");
         exit();
     } elseif ($regular_user = $user->login($email, $password)) {
         // User login successful

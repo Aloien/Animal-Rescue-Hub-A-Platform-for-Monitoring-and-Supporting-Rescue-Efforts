@@ -97,7 +97,7 @@ $stmt = $animal->read();
     <h1>Add Animal</h1>
 
 
-    <form action="create_animals.php" method="post" enctype="multipart/form-data">
+    <form action="createAnimals.php" method="post" enctype="multipart/form-data">
         <label for="animal">Name:</label>
         <input type="text" id="animal" name="animal" required>
 
