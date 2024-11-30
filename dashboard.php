@@ -32,7 +32,9 @@ if(!isset($_SESSION["loginEmail"])) {
             color: #0c969c;
         }
         .nav-link {
-            color: #6ba3be;
+            color: white !important;
+            font-weight: 500;
+            text-align: center;
         }
         .nav-link:hover {
             color: #0c969c;
