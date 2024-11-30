@@ -1,11 +1,11 @@
 <?php
-require_once 'classes/crudOperation.php';
-$crud = new CrudOperation();
+require_once 'classes/crudAnimal.php';
+$crudAnimal = new Animals();
 
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
 
-    if ($crud->deleteUser($id)) {
+    if ($crudAnimal->delete($id)) {
         echo "
         <!DOCTYPE html>
         <html lang='en'>
