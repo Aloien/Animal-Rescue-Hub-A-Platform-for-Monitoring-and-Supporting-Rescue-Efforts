@@ -95,7 +95,7 @@ $stmt = $animal->read();
 <body>
     <h1>Adoption Forms</h1>
 
-    <form action="make_adoption.php" method="POST">
+    <form action="createAdoption.php" method="POST">
         <!-- Pet Parent Information Section -->
         <div class="section">
             <h3>Pet Parent Information</h3>

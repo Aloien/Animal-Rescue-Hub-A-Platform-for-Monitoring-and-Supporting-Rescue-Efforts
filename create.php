@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
 
     if ($crud->createUser($name, $email, $phone, $password)) {
-        header("Location: admin_dashboard.php");
+        header("Location: adminDashboard.php");
     } else {
         echo "Error creating user.";
     }
