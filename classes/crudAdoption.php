@@ -1,30 +1,33 @@
 <?php
+require_once 'classes/dbconnection.php';
+
 class Adoption
 {
     private $conn;
-    private $tbl_name = "adoption_table";
+    private $tbl_name = "adoption_table"; // Ensure this matches your actual table name
 
     // Properties matching form fields
     public $id;
+    public $animal_id;
     public $name;
     public $gender;
     public $contact;
     public $monthly_salary;
     public $pet_type;
 
-    public function __construct($db)
-    {
-        $this->conn = $db;
+    public function __construct() {
+        $db = new Database();
+        $this->conn = $db->getConnect();
     }
 
     // Create a new adoption form entry
-    public function create()
-    {
-        $query = "INSERT INTO " . $this->tbl_name . " (name, gender, contact, monthly_salary, pet_type) 
-                  VALUES (:name, :gender, :contact, :monthly_salary, :pet_type)";
+    public function create() {
+        $query = "INSERT INTO " . $this->tbl_name . " (animal_id, name, gender, contact, monthly_salary, pet_type) 
+                  VALUES (:animal_id, :name, :gender, :contact, :monthly_salary, :pet_type)";
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
+        $stmt->bindParam(':animal_id', $this->animal_id);
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':gender', $this->gender);
         $stmt->bindParam(':contact', $this->contact);
@@ -35,25 +38,32 @@ class Adoption
         return $stmt->execute();
     }
 
-    // Retrieve all adoption form entries
-    public function read()
-    {
+    // Retrieve an adoption entry by ID
+    public function getAdoptionById($id) {
+        $query = "SELECT * FROM " . $this->tbl_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Retrieve all adoption entries
+    public function getAdoptions() {
         $query = "SELECT * FROM " . $this->tbl_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Update an adoption form entry by ID
-    public function update($id)
-    {
+    public function update($id) {
         $query = "UPDATE " . $this->tbl_name . " 
-                  SET name = :name, gender = :gender, contact = :contact, monthly_salary = :monthly_salary, pet_type = :pet_type 
+                  SET animal_id = :animal_id, name = :name, gender = :gender, contact = :contact, monthly_salary = :monthly_salary, pet_type = :pet_type 
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':animal_id', $this->animal_id);
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':gender', $this->gender);
         $stmt->bindParam(':contact', $this->contact);
@@ -65,8 +75,7 @@ class Adoption
     }
 
     // Delete an adoption form entry by ID
-    public function delete($id)
-    {
+    public function delete($id) {
         $query = "DELETE FROM " . $this->tbl_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute(['id' => $id]);

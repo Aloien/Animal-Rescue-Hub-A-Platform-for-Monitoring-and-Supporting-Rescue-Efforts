@@ -10,10 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     $db = $database->getConnect();
 
-    // Instantiate the AdoptionForms class
+    // Instantiate the Adoption class
     $adoptionForm = new Adoption($db);
 
     // Retrieve and sanitize form data
+    $adoptionForm->animal_id = htmlspecialchars(trim($_POST['animal_id']));
     $adoptionForm->name = htmlspecialchars(trim($_POST['name']));
     $adoptionForm->gender = htmlspecialchars(trim($_POST['gender']));
     $adoptionForm->contact = htmlspecialchars(trim($_POST['contact']));
@@ -66,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }).then((result) => {
             // Redirect to a thank-you or index page after the user acknowledges the alert
             if (result.isConfirmed) {
-                window.location.href = 'adoption_index.php';
+                window.location.href = 'adoptionList.php';
             }
         });
         </script>
