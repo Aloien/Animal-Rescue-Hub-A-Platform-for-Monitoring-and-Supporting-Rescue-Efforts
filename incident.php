@@ -1,6 +1,6 @@
 <?php
 require_once 'classes/dbConnection.php';
-require_once 'classes/Incident_management.php';
+require_once 'classes/incidentManagement.php';
 
 // Create a new instance of the Database class
 $database = new Database();
