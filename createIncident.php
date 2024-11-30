@@ -1,7 +1,7 @@
 <?php
 // Include the database connection and incident classes
 require_once 'classes/dbConnection.php';
-require_once 'classes/Incident_management.php';
+require_once 'classes/incidentManagement.php';
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
