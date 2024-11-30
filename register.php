@@ -1,6 +1,6 @@
 <?php
 require 'classes/dbconnection.php';
-require 'classes/user_management.php'; 
+require 'classes/userManagement.php'; 
 
 if (isset($_POST["submit"])) {
     $db = new Database();
