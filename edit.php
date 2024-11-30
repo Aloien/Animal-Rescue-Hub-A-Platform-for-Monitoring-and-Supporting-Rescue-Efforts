@@ -1,5 +1,5 @@
 <?php
-require 'classes/crudOperation.php';
+require_once 'classes/crudOperation.php';
 $crud = new CrudOperation();
 
 if (isset($_GET['id'])) {

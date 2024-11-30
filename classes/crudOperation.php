@@ -1,5 +1,5 @@
 <?php
-require 'classes/dbconnection.php';
+require_once 'classes/dbconnection.php';
 
 class CrudOperation {
     private $conn;

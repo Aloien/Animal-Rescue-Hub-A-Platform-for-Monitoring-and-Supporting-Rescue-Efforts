@@ -1,4 +1,5 @@
 <?php
+require_once 'classes/dbconnection.php';
 class Animals
 {
     private $conn;
@@ -14,9 +15,9 @@ class Animals
     public $status;
 
 
-    public function __construct($db)
-    {
-        $this->conn = $db;
+    public function __construct() {
+        $db = new Database();
+        $this->conn = $db->getConnect();
     }
 
 
@@ -55,26 +56,10 @@ class Animals
 
 
     // Update an animal entry by ID
-    public function update($id)
-    {
-        $query = "UPDATE " . $this->tbl_name . " 
-                  SET animal = :animal, species = :species, age = :age, description = :description, image = :image, status = :status 
-                  WHERE id = :id";
+    public function updateAnimal($id, $animal, $species, $age, $description, $image, $status) {
+        $query = "UPDATE animals_table SET animal = :animal, species = :species, age = :age, description = :description image = :image, status= :status WHERE id = :id";
         $stmt = $this->conn->prepare($query);
-
-
-        // Bind parameters
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':animal', $this->animal);
-        $stmt->bindParam(':species', $this->species);
-        $stmt->bindParam(':age', $this->age);
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':image', $this->image);
-        $stmt->bindParam(':status', $this->status);
-
-
-        // Execute the query
-        return $stmt->execute();
+        return $stmt->execute(['id' => $id, 'animal' => $animal, 'species' => $species, 'age' => $age, 'description' => $description, 'image' => $image, 'status' => $status]);
     }
 
 

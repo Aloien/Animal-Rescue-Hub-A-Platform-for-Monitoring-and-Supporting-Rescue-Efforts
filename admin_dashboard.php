@@ -6,14 +6,17 @@ if (!isset($_SESSION["adminEmail"])) {
     header("Location: login.php");
     exit();
 }
-
+require 'classes/crudAnimal.php';
 require 'classes/crudOperation.php';
 $crud = new CrudOperation();
 $users = $crud->getUsers();
+$crudAnimal = new Animals();
+$animals = $crudAnimal->read();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +40,7 @@ $users = $crud->getUsers();
         });
     </script>
 </head>
+
 <body>
     <header>
         <h1 class="text-center my-4">Welcome to Admin Dashboard</h1>
@@ -88,11 +92,56 @@ $users = $crud->getUsers();
                 ?>
             </tbody>
         </table>
-        
+
     </div>
-    <div>
-    <h2>Add Animal</h2>
-    <a href="animal_forms.php"><button>Add Animal</button></a>
+
+    <div class="container mt-4">
+        <h2>Animal List</h2>
+        <a href="animalForms.php" class="btn btn-primary mb-3">Add Animal</a>
+        <table id="userTable" class="table table-striped display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Species</th>
+                    <th>Age</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $animals->fetch(PDO::FETCH_ASSOC)): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['animal']); ?></td>
+                        <td><?php echo htmlspecialchars($row['species']); ?></td>
+                        <td><?php echo htmlspecialchars($row['age']); ?></td>
+                        <td><?php echo htmlspecialchars($row['description']); ?></td>
+                        <td>
+                            <?php if ($row['image']): ?>
+                                <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image" style="max-width: 100px;">
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo htmlspecialchars($row['status']); ?></td> <!-- Display status -->
+                        <td class="action-buttons">
+                            <form method="GET" action="editAnimal.php" style="display:inline;">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                <button type="submit" class="btn btn-success">Edit</button>
+                            </form>
+                            <form method="POST" action="deleteAnimal.php" style="display:inline;">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+
+            </tbody>
+        </table>
     </div>
+    
 </body>
+
 </html>

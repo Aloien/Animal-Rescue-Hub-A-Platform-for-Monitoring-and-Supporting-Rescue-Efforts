@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }).then((result) => {
             // Redirect to the animal index page after the user acknowledges the alert
             if(result.isConfirmed) {
-                window.location.href = 'animal_index.php';
+                window.location.href = 'admin_dashboard.php';
             }
         });
         </script>
