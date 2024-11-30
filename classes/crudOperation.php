@@ -40,5 +40,24 @@ class CrudOperation {
         $stmt = $this->conn->prepare($query);
         return $stmt->execute(['id' => $id]);
     }
-}
+  
+          // Method to get total users
+        public function getTotalUsers() {
+            $query = "SELECT COUNT(*) as total FROM tb_user WHERE role = 'user'";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'];
+        }
+    
+        // Method to get total admins
+        public function getTotalAdmins() {
+            $query = "SELECT COUNT(*) as total FROM tb_user WHERE role = 'admin'";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'];
+        }
+    }
+    
 ?>
