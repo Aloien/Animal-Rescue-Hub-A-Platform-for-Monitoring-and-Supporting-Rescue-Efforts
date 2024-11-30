@@ -94,8 +94,9 @@ if(!isset($_SESSION["loginEmail"])) {
             <div class="col-md-3">
                 <nav class="nav flex-column">
                     <a class="nav-link btn btn-primary mb-2" href="incident.php">Incident</a>
-                    <a class="nav-link btn btn-primary mb-2" href="adoption_index.php">Adoption</a>
-                    <a class="nav-link btn btn-primary mb-2" href="report.php">Report</a>
+                    <a class="nav-link btn btn-primary mb-2" href="adoptionList.php">Adoption</a>
+                    <a class="nav-link btn btn-primary mb-2" href="animalList.php">Animals</a>
+                    <a class="nav-link btn btn-primary mb-2" href="overview.php">Overview</a>
                     <a class="nav-link btn btn-primary mb-2" href="contactUs.php">Contact Us</a>
                     <a class="nav-link btn btn-secondary" href="logout.php">Logout</a>
                 </nav>
