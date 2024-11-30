@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text: 'There was an issue submitting your form. Please try again later.',
             icon: 'error'
         }).then(() => {
-            window.location.href = 'adoption_index.php';
+            window.location.href = 'adoptionList.php';
         });
         </script>
         </body>

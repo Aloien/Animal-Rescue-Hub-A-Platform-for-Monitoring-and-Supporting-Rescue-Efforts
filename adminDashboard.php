@@ -141,10 +141,6 @@ $animals = $crudAnimal->read();
             </tbody>
         </table>
     <div>
-    <h2>Add Animal</h2>
-    <a href="animalForms.php"><button>Add Animal</button></a>
-    </div>
-    
 </body>
 
 </html>

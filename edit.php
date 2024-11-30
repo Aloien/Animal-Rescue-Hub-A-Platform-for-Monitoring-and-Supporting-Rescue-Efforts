@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         icon: '". ($success ? 'success' : 'error') ."'
     }).then((result) => {
         if(result.isConfirmed) {
-            window.location.href = 'admin_dashboard.php';
+            window.location.href = 'adminDashboard.php';
         }
     });
     </script>

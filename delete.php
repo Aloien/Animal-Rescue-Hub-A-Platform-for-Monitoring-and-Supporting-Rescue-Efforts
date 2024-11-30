@@ -23,7 +23,7 @@ if (isset($_POST['id'])) {
             icon: 'success'
         }).then((result) => {
             if(result.isConfirmed) {
-                window.location.href = 'admin_dashboard.php';
+                window.location.href = 'adminDashboard.php';
             }
         });
         </script>
@@ -47,7 +47,7 @@ if (isset($_POST['id'])) {
             icon: 'error'
         }).then((result) => {
             if(result.isConfirmed) {
-                window.location.href = 'admin_dashboard.php';
+                window.location.href = 'adminDashboard.php';
             }
         });
         </script>
