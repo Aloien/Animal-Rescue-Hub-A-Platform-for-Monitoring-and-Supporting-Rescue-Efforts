@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (in_array($_FILES['image']['type'], $allowedTypes) && $_FILES['image']['size'] <= $maxSize) {
 
 
-            $targetDir = "images/";
+            $targetDir = "animalImages/";
 
 
             $targetFile = $targetDir . basename($_FILES["image"]["name"]);
@@ -84,7 +84,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }).then((result) => {
             // Redirect to the animal index page after the user acknowledges the alert
             if(result.isConfirmed) {
+<<<<<<< HEAD
                 window.location.href = 'admin_dashboard.php';
+=======
+                window.location.href = 'animalList.php';
+>>>>>>> d52c0b3acf631deb730e86c9376e0befdc132840
             }
         });
         </script>

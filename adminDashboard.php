@@ -94,6 +94,7 @@ $animals = $crudAnimal->read();
         </table>
 
     </div>
+<<<<<<< HEAD:admin_dashboard.php
 
     <div class="container mt-4">
         <h2>Animal List</h2>
@@ -140,6 +141,11 @@ $animals = $crudAnimal->read();
 
             </tbody>
         </table>
+=======
+    <div>
+    <h2>Add Animal</h2>
+    <a href="animalForms.php"><button>Add Animal</button></a>
+>>>>>>> d52c0b3acf631deb730e86c9376e0befdc132840:adminDashboard.php
     </div>
     
 </body>

@@ -1,7 +1,7 @@
 <?php
 // Include the database connection and incident classes
 require_once 'classes/dbConnection.php';
-require_once 'classes/Incident_management.php';
+require_once 'classes/incidentManagement.php';
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,24 +13,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Create a new instance of the Incident class with the database connection
     $incident = new Incident($db);
     // Sanitize and assign the form inputs to the incident properties
-    $incident->animal_type = htmlspecialchars(trim($_POST['animal_type']));
-    $incident->location = htmlspecialchars(trim($_POST['location']));
-    $incident->date = htmlspecialchars(trim($_POST['date']));
-    $incident->description = htmlspecialchars(trim($_POST['description']));
-    $incident->status = htmlspecialchars(trim($_POST['status'])); // Add status field
+    $incident->animal_type = $_POST['animal_type'];
+    $incident->location = $_POST['location'];
+    $incident->date = $_POST['date'];
+    $incident->description = $_POST['description'];
+    $incident->status = $_POST['status']; // Add status field
 
     // Check if an image file was uploaded without errors
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        // Define allowed file types and maximum file size (2MB)
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        $maxSize = 2 * 1024 * 1024; // 2MB
+        // Define the target directory for uploads
+        $targetDir = "incidentImages/";
+        
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
 
-        // Check if the uploaded file type is allowed and the file size is within the limit
-        if (in_array($_FILES['image']['type'], $allowedTypes) && $_FILES['image']['size'] <= $maxSize) {
-            // Define the target directory for uploads
-            $targetDir = "uploads/";
-            // Define the target file path
-            $targetFile = $targetDir . basename($_FILES["image"]["name"]);
+        // Define the target file path
+        $targetFile = $targetDir . basename($_FILES["image"]["name"]);
+        // Get the image file type
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        // Check if the uploaded file is a valid image and within the size limit
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if ($check !== false && $_FILES["image"]["size"] <= 5000000 && in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
             // Move the uploaded file to the target directory
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
                 // Assign the file path to the incident image property
@@ -46,40 +51,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
     } else {
-        // If no image was uploaded, set the incident image property to null
-        $incident->image = null;
+        // Handle the case where no file was uploaded or there was an error
+        echo "No file uploaded or there was an error.";
+        exit;
     }
 
-    // Attempt to create the incident record in the database
+    // Save the incident to the database (assuming you have a method for this)
     if ($incident->create()) {
-        // If successful, display a success message using SweetAlert
-        echo "
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>SweetAlert</title>
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        </head>
-        <body>
-        <script>
-        Swal.fire({
-            title: 'Success!',
-            text: 'Incident was successfully reported!',
-            icon: 'success'
-        }).then((result) => {
-            // Redirect to the incident page after the user acknowledges the alert
-            if(result.isConfirmed) {
-                window.location.href = 'incident.php';
-            }
-        });
-        </script>
-        </body>
-        </html>";
+        header("Location: incident.php?success=true");
+        exit;
     } else {
-        // If the incident creation fails, display an error message
-        echo "Error reporting incident. Please try again later.";
+        echo "Error creating incident.";
     }
 }
 ?>

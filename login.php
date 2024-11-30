@@ -1,6 +1,6 @@
 <?php
 require 'classes/dbconnection.php'; 
-require 'classes/user_management.php'; 
+require 'classes/userManagement.php'; 
 session_start();
 
 unset($_SESSION["adminEmail"]);
@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
         // Admin login successful
         $_SESSION["adminEmail"] = $admin_user['email'];
         $_SESSION["role"] = 'admin';
-        header("Location: admin_dashboard.php");
+        header("Location: adminDashboard.php");
         exit();
     } elseif ($regular_user = $user->login($email, $password)) {
         // User login successful
