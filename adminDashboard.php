@@ -92,7 +92,7 @@ $users = $crud->getUsers();
     </div>
     <div>
     <h2>Add Animal</h2>
-    <a href="animal_forms.php"><button>Add Animal</button></a>
+    <a href="animalForms.php"><button>Add Animal</button></a>
     </div>
 </body>
 </html>
