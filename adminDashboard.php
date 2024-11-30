@@ -7,11 +7,14 @@ if (!isset($_SESSION["adminEmail"])) {
     exit();
 }
 require 'classes/crudAnimal.php';
+require 'classes/crudAdoption.php';
 require 'classes/crudOperation.php';
 $crud = new CrudOperation();
 $users = $crud->getUsers();
 $crudAnimal = new Animals();
 $animals = $crudAnimal->read();
+$crudAdoption = new Adoption();
+$adoptions = $crudAdoption->getAdoptions();
 ?>
 
 <!DOCTYPE html>
@@ -141,6 +144,46 @@ $animals = $crudAnimal->read();
             </tbody>
         </table>
     <div>
+
+    <div class="container mt-4">
+        <h2>Adoption List</h2>
+        <table id="userTable" class="table table-striped display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Contact Number</th>
+                    <th>Monthly Salary</th>
+                    <th>Animal ID</th>
+                    <th>Pet Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($adoptions as $adoption) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($adoption['id']) . "</td>";
+                    echo "<td>" . htmlspecialchars($adoption['name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($adoption['contact']) . "</td>";
+                    echo "<td>" . htmlspecialchars($adoption['gender']) . "</td>";
+                    echo "<td>" . htmlspecialchars($adoption['monthly_salary']) . "</td>";
+                    echo "<td>" . htmlspecialchars($adoption['animal_id']) . "</td>";
+                    echo "<td>" . htmlspecialchars($adoption['pet_type']) . "</td>";
+                    echo "<td class='action-buttons'>
+                        <form method='POST' action='deleteAdoption.php' style='display:inline;'>
+                            <input type='hidden' name='id' value='" . htmlspecialchars($adoption['id']) . "'>
+                            <button type='submit' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this user?\")'>Delete</button>
+                        </form>
+                    </td>";
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+
+    </div>
+
 </body>
 
 </html>
