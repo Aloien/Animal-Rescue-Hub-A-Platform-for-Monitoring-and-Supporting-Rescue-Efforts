@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Instantiate the Adoption class
     $adoptionForm = new Adoption($db);
+    $crudAnimal = new Animals($db);
 
     // Retrieve and sanitize form data
     $adoptionForm->animal_id = htmlspecialchars(trim($_POST['animal_id']));
@@ -20,6 +21,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adoptionForm->contact = htmlspecialchars(trim($_POST['contact']));
     $adoptionForm->monthly_salary = htmlspecialchars(trim($_POST['monthly_salary']));
     $adoptionForm->pet_type = htmlspecialchars(trim($_POST['pet_type']));
+
+    // Check if the animal_id exists in the animals_table
+    $animal = $crudAnimal->getAnimalById($adoptionForm->animal_id);
+    if (!$animal) {
+        echo "
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Error</title>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+        Swal.fire({
+            title: 'Error!',
+            text: 'The specified animal ID does not exist.',
+            icon: 'error'
+        }).then(() => {
+            window.history.back();
+        });
+        </script>
+        </body>
+        </html>";
+        exit;
+    }
 
     // Add server-side validations if needed (e.g., salary must be a number)
     if (!is_numeric($adoptionForm->monthly_salary) || $adoptionForm->monthly_salary < 0) {
@@ -97,3 +125,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </html>";
     }
 }
+?>

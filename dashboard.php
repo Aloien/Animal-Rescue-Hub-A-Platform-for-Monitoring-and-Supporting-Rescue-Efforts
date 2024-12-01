@@ -40,7 +40,7 @@ if(!isset($_SESSION["loginEmail"])) {
             color: #0c969c;
         }
         .jumbotron {
-            background-image: url('wildlife-header.jpg');
+            background-image: url('path_to_animal_image.jpg');
             background-size: cover;
             background-position: center;
             color: #f5f5f5;
@@ -102,6 +102,7 @@ if(!isset($_SESSION["loginEmail"])) {
                 </nav>
             </div>
             <div class="col-md-9">
+                <button onclick="history.back()" class="btn btn-secondary mb-3">Back</button>
                 <div style="background-image: url('path_to_animal_image.jpg'); height: 500px; background-size: cover;">
                     <!-- Additional content can go here -->
                 </div>

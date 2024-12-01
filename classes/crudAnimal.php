@@ -2,7 +2,7 @@
 require_once 'classes/dbconnection.php';
 class Animals
 {
-    private $conn;
+    private $pdo;
     private $tbl_name = "animals_table";
 
     public $id;
@@ -13,33 +13,28 @@ class Animals
     public $image;
     public $status;
 
-    public function __construct() {
-        $db = new Database();
-        $this->conn = $db->getConnect();
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     // Create a new animal entry
-    public function create() {
-        $query = "INSERT INTO " . $this->tbl_name . " (animal, species, age, description, image, status) 
-                  VALUES (:animal, :species, :age, :description, :image, :status)";
-        $stmt = $this->conn->prepare($query);
-
-        // Bind parameters
-        $stmt->bindParam(':animal', $this->animal);
-        $stmt->bindParam(':species', $this->species);
-        $stmt->bindParam(':age', $this->age);
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':image', $this->image);
-        $stmt->bindParam(':status', $this->status);
-
-        // Execute the query
-        return $stmt->execute();
+    public function create($animal, $species, $age, $description, $image, $status) {
+        $sql = "INSERT INTO " . $this->tbl_name . " (animal, species, age, description, image, status) VALUES (:animal, :species, :age, :description, :image, :status)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':animal' => $animal,
+            ':species' => $species,
+            ':age' => $age,
+            ':description' => $description,
+            ':image' => $image,
+            ':status' => $status
+        ]);
     }
 
     // Retrieve an animal entry by ID
     public function getAnimalById($id) {
         $query = "SELECT * FROM " . $this->tbl_name . " WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -48,7 +43,7 @@ class Animals
     public function read()
     {
         $query = "SELECT * FROM " . $this->tbl_name;
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
 
         return $stmt;
@@ -59,7 +54,7 @@ class Animals
         $query = "UPDATE " . $this->tbl_name . " 
                   SET animal = :animal, species = :species, age = :age, description = :description, image = :image, status = :status 
                   WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
         // Bind parameters
         $stmt->bindParam(':animal', $animal);
@@ -74,11 +69,20 @@ class Animals
         return $stmt->execute();
     }
 
+    // Update the status of an animal entry
+    public function updateStatus($id, $status) {
+        $query = "UPDATE animals_table SET status = :status WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
     // Delete an animal entry by ID
     public function delete($id)
     {
         $query = "DELETE FROM " . $this->tbl_name . " WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         return $stmt->execute(['id' => $id]);
     }
 }
