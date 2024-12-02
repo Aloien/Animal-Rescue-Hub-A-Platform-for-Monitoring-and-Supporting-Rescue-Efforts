@@ -84,7 +84,7 @@ $stmt = $incident->read();
 <body>
     <h1>Incident Report</h1>
 
-    <form action="createIncident.php" method="post" enctype="multipart/form-data">
+    <form action="createIncident.php" method="post" enctype="multipart/form-data" onsubmit="return setGeolocation()">
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" required>
         
@@ -100,6 +100,8 @@ $stmt = $incident->read();
         <label for="image">Image:</label>
         <input type="file" id="image" name="image">
         
+        <input type="hidden" id="geolocation" name="geolocation">
+        
         <button type="submit">Report Incident</button>
     </form>
 
@@ -113,6 +115,7 @@ $stmt = $incident->read();
                 <th>Description</th>
                 <th>Image</th>
                 <th>Status</th>
+                <th>Geolocation</th>
             </tr>
         </thead>
         <tbody>
@@ -129,24 +132,34 @@ $stmt = $incident->read();
                         <?php endif; ?>
                     </td>
                     <td><?php echo htmlspecialchars($row['status']); ?></td>
+                    <td>
+                        <?php if (!empty($row['geolocation'])): ?>
+                            <?php list($lat, $lon) = explode(',', $row['geolocation']); ?>
+                            <button onclick="window.open('https://www.google.com/maps?q=<?php echo $lat; ?>,<?php echo $lon; ?>', '_blank')">Locate</button>
+                        <?php endif; ?>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
-
     <script>
-        $(document).ready(function() {
-            $('#incidentTable').DataTable();
-        });
-
-        // Check if the incident was created successfully
-        <?php if (isset($_GET['success']) && $_GET['success'] == 'true'): ?>
-            Swal.fire({
-                title: 'Incident created successfully.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        <?php endif; ?>
+        function setGeolocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    document.getElementById('geolocation').value = lat + ',' + lon;
+                    document.forms[0].submit();
+                }, function(error) {
+                    console.error('Error getting geolocation: ', error);
+                    return false;
+                });
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+                return false;
+            }
+            return false;
+        }
     </script>
 </body>
 </html>

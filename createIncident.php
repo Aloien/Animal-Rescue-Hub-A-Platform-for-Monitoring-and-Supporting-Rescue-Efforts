@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $incident->date = $_POST['date'];
     $incident->description = $_POST['description'];
     $incident->status = 'pending'; // Automatically set status to "Pending"
+    $incident->geolocation = $_POST['geolocation'];
 
     // Handle file upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
@@ -70,3 +71,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+<form action="createIncident.php" method="post" enctype="multipart/form-data" onsubmit="return getLocation()">
+    <!-- existing form fields -->
+    <input type="hidden" id="geolocation" name="geolocation">
+    <button type="button" onclick="getLocation()">Locate</button>
+    <button type="submit">Report Incident</button>
+</form>
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            document.getElementById('geolocation').value = lat + ',' + lon;
+            window.open(`https://www.google.com/maps?q=${lat},${lon}`, '_blank');
+        }, function(error) {
+            console.error('Error getting geolocation: ', error);
+        });
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+}
+</script>

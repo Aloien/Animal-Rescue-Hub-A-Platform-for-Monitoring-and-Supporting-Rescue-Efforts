@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $incident->date = htmlspecialchars(trim($_POST['date'] . ' ' . $_POST['time'])); // Combine date and time
     $incident->description = htmlspecialchars(trim($_POST['description']));
     $incident->status = htmlspecialchars(trim($_POST['status']));
+    $incident->geolocation = htmlspecialchars(trim($_POST['geolocation']));
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -109,6 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="editIncident.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($incidentData['id']); ?>">
         <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($incidentData['image']); ?>">
+        <input type="hidden" id="geolocation" name="geolocation" value="<?php echo htmlspecialchars($incidentData['geolocation']); ?>">
 
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" value="<?php echo htmlspecialchars($incidentData['animal_type']); ?>" required><br><br>
