@@ -40,7 +40,7 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <!-- SweetAlert2 CSS -->
@@ -48,11 +48,11 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -109,7 +109,6 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container mt-4">
         <h2>Animal and Incident List</h2>
         <a href="animalForms.php" class="btn btn-primary mb-3">Add Animal</a>
-        <a href="incidentForms.php" class="btn btn-primary mb-3">Report Incident</a>
         <table id="animalIncidentTable" class="table table-striped display">
             <thead>
                 <tr>
@@ -206,7 +205,7 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <table id="adoptionTable" class="table table-striped display">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>ID</th> 
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Contact Number</th>
