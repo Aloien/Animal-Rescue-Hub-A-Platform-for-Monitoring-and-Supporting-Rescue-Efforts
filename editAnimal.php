@@ -101,6 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <select id="status" name="status" required>
                 <option value="in facility" <?php echo ($animal['status'] == 'in facility') ? 'selected' : ''; ?>>In Facility</option>
                 <option value="adopted" <?php echo ($animal['status'] == 'adopted') ? 'selected' : ''; ?>>Adopted</option>
+                <option value="released" <?php echo ($animal['status'] == 'under medical') ? 'selected' : ''; ?>>Under Medical</option>
                 <option value="released" <?php echo ($animal['status'] == 'released') ? 'selected' : ''; ?>>Released</option>
                 <option value="pending" <?php echo ($animal['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
                 <option value="rescued" <?php echo ($animal['status'] == 'rescued') ? 'selected' : ''; ?>>Rescued</option>

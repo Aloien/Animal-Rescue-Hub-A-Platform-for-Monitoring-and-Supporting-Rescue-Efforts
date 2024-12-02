@@ -100,9 +100,9 @@ $stmt = $animal->read();
         <select id="status" name="status" required>
             <option value="in facility">In Facility</option>
             <option value="adopted">Adopted</option>
-            <option value="released">Released</option>
-            <option value="pending">Pending</option>
-            <option value="rescued">Rescued</option>
+            <option value="rescued">Rescued</option> 
+            <option value="under medical">Under Medical</option> 
+            <option value="released">Released</option> 
         </select>
 
         <button type="submit" class="btn btn-primary">Submit</button>

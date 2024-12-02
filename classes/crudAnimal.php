@@ -40,8 +40,7 @@ class Animals
     }
 
     // Retrieve all animal entries
-    public function read()
-    {
+    public function read() {
         $query = "SELECT * FROM " . $this->tbl_name;
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
@@ -79,11 +78,63 @@ class Animals
     }
 
     // Delete an animal entry by ID
-    public function delete($id)
-    {
+    public function delete($id) {
         $query = "DELETE FROM " . $this->tbl_name . " WHERE id = :id";
         $stmt = $this->pdo->prepare($query);
         return $stmt->execute(['id' => $id]);
     }
+
+    // Get the total count of animals in the facility
+    public function getTotalInFacility() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'In Facility'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['total'];
+        } else {
+            return 0;
+        }
+    }
+
+    // Get the total count of rescued animals
+    public function getTotalAdopted() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Adopted'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['total'];
+        } else {
+            return 0;
+        }
+    }
+
+    // Get the total count of released animals
+    public function getTotalReleased() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Released'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['total'];
+        } else {
+            return 0;
+        }
+    }
+
+    // Get the total count of under medical animals
+    public function getTotalUnderMedical() {
+        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Under Medical'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['total'];
+        } else {
+            return 0;
+        }
+    }
+    
 }
 ?>

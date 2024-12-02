@@ -98,7 +98,7 @@ class Admin extends User {
         if ($email === 'admin@gmail.com' && $password === 'admin') {
             return ['email' => $email, 'role' => 'admin'];
         }
-        return false; // Ensure only admin credentials work here
+        return false; 
     }
 }
 ?>
