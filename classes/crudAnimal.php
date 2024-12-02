@@ -87,7 +87,7 @@ class Animals
     // Get the total count of animals in the facility
     public function getTotalInFacility() {
         $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'In Facility'";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
@@ -100,7 +100,7 @@ class Animals
     // Get the total count of rescued animals
     public function getTotalAdopted() {
         $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Adopted'";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
@@ -113,7 +113,7 @@ class Animals
     // Get the total count of released animals
     public function getTotalReleased() {
         $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Released'";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
@@ -126,7 +126,7 @@ class Animals
     // Get the total count of under medical animals
     public function getTotalUnderMedical() {
         $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Under Medical'";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
