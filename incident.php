@@ -46,13 +46,21 @@ $stmt = $incident->read();
             align-items: center; 
             margin: auto; 
         }
-        label, input, textarea, button {
-            margin: 10px 0;
-        }
         input, textarea, button {
-            max-width: 300px; 
-            width: 100%; 
-            padding: 5px; 
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
         }
         table {
             border-collapse: collapse;
@@ -92,17 +100,10 @@ $stmt = $incident->read();
         <label for="image">Image:</label>
         <input type="file" id="image" name="image">
         
-        <label for="status">Status:</label>
-        <select id="status" name="status" required>
-            <option value="pending">Pending</option>
-            <option value="rescued">Rescued</option>
-        </select>
-        
         <button type="submit">Report Incident</button>
     </form>
-    
-    <!-- Incidents Table -->
-    <table id="incidentTable">
+
+    <table id="incidentTable" class="display">
         <thead>
             <tr>
                 <th>ID</th>
@@ -123,7 +124,7 @@ $stmt = $incident->read();
                     <td><?php echo htmlspecialchars($row['date']); ?></td>
                     <td><?php echo htmlspecialchars($row['description']); ?></td>
                     <td>
-                        <?php if (!empty($row['image'])): ?>
+                        <?php if ($row['image']): ?>
                             <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Incident Image" style="max-width: 100px;">
                         <?php endif; ?>
                     </td>
@@ -134,7 +135,6 @@ $stmt = $incident->read();
     </table>
 
     <script>
-        // Initialize DataTables plugin for the incidents table
         $(document).ready(function() {
             $('#incidentTable').DataTable();
         });

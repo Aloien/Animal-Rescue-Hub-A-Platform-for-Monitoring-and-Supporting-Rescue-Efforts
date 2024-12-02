@@ -80,5 +80,12 @@ class Adoption
         $stmt = $this->conn->prepare($query);
         return $stmt->execute(['id' => $id]);
     }
+
+    // Delete adoption entries by animal_id
+    public function deleteByAnimalId($animal_id) {
+        $query = "DELETE FROM " . $this->tbl_name . " WHERE animal_id = :animal_id";
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute(['animal_id' => $animal_id]);
+    }
 }
 ?>
