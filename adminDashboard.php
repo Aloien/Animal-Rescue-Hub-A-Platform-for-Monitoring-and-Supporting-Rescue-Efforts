@@ -123,6 +123,7 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Description</th>
                     <th>Image</th>
                     <th>Status</th>
+                    <th>Geolocation</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -144,6 +145,7 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php endif; ?>
                         </td>
                         <td><?php echo htmlspecialchars($row['status']); ?></td>
+                        <td><?php echo htmlspecialchars($row['geolocation']); ?></td>
                         <td class="action-buttons">
                             <form method="POST" action="updateAnimalStatus.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
@@ -178,6 +180,7 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php endif; ?>
                         </td>
                         <td><?php echo htmlspecialchars($row['status']); ?></td>
+                        <td><?php echo htmlspecialchars($row['geolocation']); ?></td>
                         <td class="action-buttons">
                             <form method="POST" action="updateIncidentStatus.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
