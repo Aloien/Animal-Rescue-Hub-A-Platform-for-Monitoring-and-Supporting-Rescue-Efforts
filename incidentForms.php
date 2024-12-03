@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $incident->date = htmlspecialchars(trim($_POST['date']));
     $incident->description = htmlspecialchars(trim($_POST['description']));
     $incident->status = htmlspecialchars(trim($_POST['status']));
+    $incident->geolocation = htmlspecialchars(trim($_POST['geolocation']));
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -95,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h2>Add Incident</h2>
-    <form action="incidentForms.php" method="post" enctype="multipart/form-data">
+    <form action="incidentForms.php" method="post" enctype="multipart/form-data" onsubmit="return setGeolocation()">
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" required><br><br>
         
@@ -119,8 +120,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="image">Image:</label>
         <input type="file" id="image" name="image"><br><br>
-        
+
+        <input type="hidden" id="geolocation" name="geolocation">
+        <button type="button" onclick="setGeolocation()">Locate</button>
         <button type="submit">Add Incident</button>
     </form>
+    <script>
+        function setGeolocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    document.getElementById('geolocation').value = lat + ',' + lon;
+                    window.open(`https://www.google.com/maps?q=${lat},${lon}`, '_blank');
+                }, function(error) {
+                    console.error('Error getting geolocation: ', error);
+                });
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        }
+    </script>
 </body>
 </html>

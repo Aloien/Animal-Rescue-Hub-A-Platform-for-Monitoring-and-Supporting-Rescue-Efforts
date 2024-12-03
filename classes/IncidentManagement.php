@@ -10,13 +10,14 @@ class Incident {
     public $description;
     public $status;
     public $image;
+    public $geolocation;
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " (animal_type, location, date, description, status, image) VALUES (:animal_type, :location, :date, :description, :status, :image)";
+        $query = "INSERT INTO " . $this->table_name . " (animal_type, location, date, description, status, image, geolocation) VALUES (:animal_type, :location, :date, :description, :status, :image, :geolocation)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':animal_type', $this->animal_type);
@@ -25,6 +26,7 @@ class Incident {
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':status', $this->status);
         $stmt->bindParam(':image', $this->image);
+        $stmt->bindParam(':geolocation', $this->geolocation);
 
         return $stmt->execute();
     }
@@ -46,7 +48,7 @@ class Incident {
 
     public function update($id) {
         $query = "UPDATE " . $this->table_name . " 
-                  SET animal_type = :animal_type, location = :location, date = :date, description = :description, status = :status, image = :image 
+                  SET animal_type = :animal_type, location = :location, date = :date, description = :description, status = :status, image = :image, geolocation = :geolocation 
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
@@ -56,6 +58,7 @@ class Incident {
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':status', $this->status);
         $stmt->bindParam(':image', $this->image);
+        $stmt->bindParam(':geolocation', $this->geolocation);
         $stmt->bindParam(':id', $id);
 
         return $stmt->execute();
