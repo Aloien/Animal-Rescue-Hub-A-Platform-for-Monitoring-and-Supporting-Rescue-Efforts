@@ -2,89 +2,15 @@
 require_once 'classes/dbConnection.php';
 require_once 'classes/incidentManagement.php';
 
+// Create a new instance of the Database class
 $database = new Database();
 $db = $database->getConnect();
 
+// Create a new instance of the Incident class with the database connection
 $incident = new Incident($db);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $incident->animal_type = htmlspecialchars(trim($_POST['animal_type']));
-    $incident->location = htmlspecialchars(trim($_POST['location']));
-    $incident->date = htmlspecialchars(trim($_POST['date']));
-    $incident->description = htmlspecialchars(trim($_POST['description']));
-    $incident->status = htmlspecialchars(trim($_POST['status']));
-    $incident->geolocation = htmlspecialchars(trim($_POST['geolocation']));
-
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        $maxSize = 2 * 1024 * 1024;
-
-        if (in_array($_FILES['image']['type'], $allowedTypes) && $_FILES['image']['size'] <= $maxSize) {
-            $targetDir = "incidentImages/";
-            $targetFile = $targetDir . basename($_FILES["image"]["name"]);
-
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-                $incident->image = $targetFile;
-            } else {
-                echo "Error uploading file.";
-                exit;
-            }
-        } else {
-            echo "Invalid file type or size.";
-            exit;
-        }
-    } else {
-        $incident->image = null;
-    }
-
-    if ($incident->create()) {
-        echo "
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>Success</title>
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        </head>
-        <body>
-        <script>
-        Swal.fire({
-            title: 'Success!',
-            text: 'Incident added successfully!',
-            icon: 'success'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = 'adminDashboard.php';
-            }
-        });
-        </script>
-        </body>
-        </html>";
-    } else {
-        echo "
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>Error</title>
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        </head>
-        <body>
-        <script>
-        Swal.fire({
-            title: 'Error!',
-            text: 'There was an issue adding the incident. Please try again later.',
-            icon: 'error'
-        }).then(() => {
-            window.history.back();
-        });
-        </script>
-        </body>
-        </html>";
-    }
-}
+// Fetch all incidents from the database
+$stmt = $incident->read();
 ?>
 
 <!DOCTYPE html>
@@ -92,39 +18,125 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Incident</title>
+    <title>Incident Report</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        form, table {
+            width: 80%;
+            margin: 20px 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            margin: auto; 
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        @media (max-width: 600px) {
+            form, table {
+                width: 100%;
+            }
+            input, textarea, button {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Add Incident</h2>
-    <form action="incidentForms.php" method="post" enctype="multipart/form-data" onsubmit="return setGeolocation()">
+    <h1>Incident Report</h1>
+
+    <form action="createIncident.php" method="post" enctype="multipart/form-data" onsubmit="return setGeolocation()">
         <label for="animal_type">Animal Type:</label>
-        <input type="text" id="animal_type" name="animal_type" required><br><br>
-        
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required><br><br>
+        <input type="text" id="animal_type" name="animal_type" required>
         
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br><br>
+        <input type="date" id="date" name="date" required>
         
         <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea><br><br>
-
-        <label for="status">Status:</label>
-        <select id="status" name="status" required>
-            <option value="in facility">In Facility</option>
-            <option value="adopted">Adopted</option>
-            <option value="released">Released</option>
-            <option value="pending">Pending</option>
-            <option value="rescued">Rescued</option>
-        </select><br><br>
-
+        <textarea id="description" name="description" required></textarea>
+        
         <label for="image">Image:</label>
-        <input type="file" id="image" name="image"><br><br>
-
+        <input type="file" id="image" name="image">
+        
         <input type="hidden" id="geolocation" name="geolocation">
-        <button type="button" onclick="setGeolocation()">Locate</button>
-        <button type="submit">Add Incident</button>
+        
+        <button type="submit">Report Incident</button>
     </form>
+
+    <table id="incidentTable" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Animal Type</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Status</th>
+                <th>Geolocation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['animal_type']); ?></td>
+                    <td><?php echo htmlspecialchars($row['date']); ?></td>
+                    <td><?php echo htmlspecialchars($row['description']); ?></td>
+                    <td>
+                        <?php if ($row['image']): ?>
+                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Incident Image" style="max-width: 100px;">
+                        <?php endif; ?>
+                    </td>
+                    <td><?php echo htmlspecialchars($row['status']); ?></td>
+                    <td>
+                        <?php if (!empty($row['geolocation'])): ?>
+                            <?php list($lat, $lon) = explode(',', $row['geolocation']); ?>
+                            <button onclick="window.open('https://www.google.com/maps?q=<?php echo $lat; ?>,<?php echo $lon; ?>', '_blank')">Locate</button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
     <script>
         function setGeolocation() {
             if (navigator.geolocation) {
@@ -132,13 +144,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     document.getElementById('geolocation').value = lat + ',' + lon;
-                    window.open(`https://www.google.com/maps?q=${lat},${lon}`, '_blank');
+                    document.forms[0].submit();
                 }, function(error) {
                     console.error('Error getting geolocation: ', error);
+                    return false;
                 });
             } else {
                 console.error('Geolocation is not supported by this browser.');
+                return false;
             }
+            return false;
         }
     </script>
 </body>

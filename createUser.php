@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Create User</h2>
-        <form action="create.php" method="post">
+        <form action="createUser.php" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <input type="text" id="name" name="name" class="form-control" required>

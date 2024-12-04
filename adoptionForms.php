@@ -16,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adoptionForm->gender = htmlspecialchars(trim($_POST['gender']));
     $adoptionForm->contact = htmlspecialchars(trim($_POST['contact']));
     $adoptionForm->monthly_salary = htmlspecialchars(trim($_POST['monthly_salary']));
-    $adoptionForm->pet_type = htmlspecialchars(trim($_POST['pet_type']));
 
     if ($adoptionForm->create()) {
         echo "
@@ -67,7 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,16 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <label for="monthly_salary">Monthly Salary:</label>
         <input type="number" id="monthly_salary" name="monthly_salary" min="0" required><br><br>
-        
-        <label for="pet_type">Select Pet Type:</label><br>
-        <select id="pet_type" name="pet_type" required>
-            <option value="">--Select--</option>
-            <option value="Cat">Cat</option>
-            <option value="Dog">Dog</option>
-            <option value="Rabbit">Rabbit</option>
-            <option value="Guinea Pig">Guinea Pig</option>
-            <option value="Hamster">Hamster</option>
-        </select><br><br>
         
         <button type="submit">Submit</button>
     </form>
