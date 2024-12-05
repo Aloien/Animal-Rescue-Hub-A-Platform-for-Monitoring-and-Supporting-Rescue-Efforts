@@ -49,14 +49,14 @@ table .table-striped tbody tr:nth-of-type(odd) {
 
 .btn-primary {
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #0a7075;
+    border-color: #0a7075;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #0056b3;
-    border-color: #004085;
+    background-color: #0c969c;
+    border-color: #0c969c;
 }
 
 .btn-success {
@@ -83,6 +83,16 @@ table .table-striped tbody tr:nth-of-type(odd) {
     border-color: #bd2130;
 }
 
+.btn-secondary {
+    background-color: #274d60;
+    border-color: #274d60;
+}
+
+.btn-secondary:hover {
+    background-color: #032f30;
+    border-color: #032f30;
+}
+
 /* Additional styles for action buttons */
 .action-buttons form {
     display: inline;
@@ -90,4 +100,61 @@ table .table-striped tbody tr:nth-of-type(odd) {
 
 .action-buttons button {
     margin-right: 0.5rem;
+}
+
+body {
+    padding-top: 56px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: #032f30;
+}
+
+.navbar-brand {
+    color: #6ba3be;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    color: #0c969c;
+}
+
+.nav-link {
+    color: #6ba3be;
+}
+
+.nav-link:hover {
+    color: #0c969c;
+}
+
+.jumbotron {
+    background-image: url('wildlife-header.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #f5f5f5;
+    text-shadow: 1px 1px 2px black;
+}
+
+.section-title {
+    margin-bottom: 40px;
+    font-weight: bold;
+    color: #032f30;
+}
+
+footer {
+    background-color: #032f30;
+    color: #f5f5f5;
+    margin-top: auto;
+}
+
+footer a {
+    color: #6ba3be;
+}
+
+footer a:hover {
+    color: #0c969c;
 }

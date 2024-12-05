@@ -12,18 +12,18 @@
             align-items: center;
             font-family: Arial, sans-serif;
             padding: 20px;
-            background: url('background_Images/contactus.jpg') no-repeat center center fixed; /* Use a relative path */
-            background-size: cover; /* Ensure the background image covers the entire page */
+            background: url('backgroundImages/contactus.png') no-repeat center center fixed; 
+            background-size: cover; 
         }
         .contact-info {
             width: 100%;
             max-width: 600px;
             margin: 20px 0;
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            background-color: rgba(255, 255, 255, 0.9); 
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left; /* Align text to the left */
+            text-align: left; 
         }
         .container {
             display: flex;
@@ -33,7 +33,7 @@
         .contact-info h2 {
             margin-bottom: 20px;
             color: #343a40;
-            text-align: center; /* Center the heading */
+            text-align: center;
         }
         .contact-info p {
             margin-bottom: 10px;
@@ -50,6 +50,11 @@
     </style>
 </head>
 <body>
+    <div class="container mt-5">
+        <div class="text-start mb-4">
+            <button onclick="window.location.href='userDashboard.php'" class="btn btn-secondary">Back</button>
+        </div>
+    </div>
     <!-- Header -->
     <header class="py-5 text-center w-100" style="background: none;">
         <div class="container">
