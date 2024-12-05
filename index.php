@@ -81,7 +81,7 @@
                         <a class="nav-link" href="login.php">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.php">Register</a>
+                        <a class="nav-link" href="registerUser.php">Register</a>
                     </li>
                 </ul>
             </div>
@@ -106,7 +106,7 @@
             <h2 class="text-center section-title">Adopt a Pet</h2>
             <p class="text-center">Find your new best friend from our wide selection of rescued animals. Each one is looking for a loving home just like yours.</p>
             <div class="text-center">
-                <a href="adopt.html" class="btn btn-primary">Browse Animals</a>
+                <a href="adoptionList.php" class="btn btn-primary">Browse Animals</a>
             </div>
         </section>
         <section class="my-5">

@@ -1,19 +1,19 @@
 <?php
 require_once 'classes/dbconnection.php';
-require_once 'classes/crudAnimal.php';
+require_once 'classes/IncidentManagement.php';
 
 // Initialize database connection
 $db = new Database();
 $conn = $db->getConnect();
 
 // Instantiate the Animals class with the database connection
-$crudAnimal = new Animals($conn);
+$crudIncident = new Incident($conn);
 
 // Fetch initial statistics for animals
-$totalInFacility = $crudAnimal->getTotalInFacility();
-$totalAdopted = $crudAnimal->getTotalAdopted();
-$totalReleased = $crudAnimal->getTotalReleased();
-$totalUnderMedical = $crudAnimal->getTotalUnderMedical();
+$totalInFacility = $crudIncident->getTotalInFacility();
+$totalAdopted = $crudIncident->getTotalAdopted();
+$totalReleased = $crudIncident->getTotalReleased();
+$totalUnderMedical = $crudIncident->getTotalUnderMedical();
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ $totalUnderMedical = $crudAnimal->getTotalUnderMedical();
         document.addEventListener("DOMContentLoaded", function() {
             function fetchDataAndUpdateChart(chart) {
                 $.ajax({
-                    url: 'fetch_animal_data.php',
+                    url: 'fetchAnimalData.php',
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {

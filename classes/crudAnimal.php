@@ -1,8 +1,8 @@
 <?php
-require_once 'classes/dbconnection.php';
+require_once 'classes/dbConnection.php';
 class Animals
 {
-    private $pdo;
+    private $conn;
     private $tbl_name = "animals_table";
 
     public $id;
@@ -13,14 +13,16 @@ class Animals
     public $image;
     public $status;
 
-    public function __construct($pdo) {
-        $this->pdo = $pdo;
+    public function __construct($db) {
+        $this->conn = $db;
     }
 
     // Create a new animal entry
     public function create($animal, $species, $age, $description, $image, $status) {
-        $sql = "INSERT INTO " . $this->tbl_name . " (animal, species, age, description, image, status) VALUES (:animal, :species, :age, :description, :image, :status)";
-        $stmt = $this->pdo->prepare($sql);
+        $sql = "INSERT INTO " . $this->tbl_name . " (animal, species, age, description, image, status) 
+                VALUES (:animal, :species, :age, :description, :image, :status)";
+        $stmt = $this->conn->prepare($sql);
+    
         $stmt->execute([
             ':animal' => $animal,
             ':species' => $species,
@@ -30,11 +32,13 @@ class Animals
             ':status' => $status
         ]);
     }
+    
+    
 
     // Retrieve an animal entry by ID
     public function getAnimalById($id) {
         $query = "SELECT * FROM " . $this->tbl_name . " WHERE id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -42,7 +46,7 @@ class Animals
     // Retrieve all animal entries
     public function read() {
         $query = "SELECT * FROM " . $this->tbl_name;
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
         return $stmt;
@@ -53,7 +57,7 @@ class Animals
         $query = "UPDATE " . $this->tbl_name . " 
                   SET animal = :animal, species = :species, age = :age, description = :description, image = :image, status = :status 
                   WHERE id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->conn->prepare($query);
 
         // Bind parameters
         $stmt->bindParam(':animal', $animal);
@@ -71,7 +75,7 @@ class Animals
     // Update the status of an animal entry
     public function updateStatus($id, $status) {
         $query = "UPDATE animals_table SET status = :status WHERE id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
@@ -80,61 +84,10 @@ class Animals
     // Delete an animal entry by ID
     public function delete($id) {
         $query = "DELETE FROM " . $this->tbl_name . " WHERE id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->conn->prepare($query);
         return $stmt->execute(['id' => $id]);
     }
-
-    // Get the total count of animals in the facility
-    public function getTotalInFacility() {
-        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'In Facility'";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['total'];
-        } else {
-            return 0;
-        }
-    }
-
-    // Get the total count of rescued animals
-    public function getTotalAdopted() {
-        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Adopted'";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['total'];
-        } else {
-            return 0;
-        }
-    }
-
-    // Get the total count of released animals
-    public function getTotalReleased() {
-        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Released'";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['total'];
-        } else {
-            return 0;
-        }
-    }
-
-    // Get the total count of under medical animals
-    public function getTotalUnderMedical() {
-        $query = "SELECT COUNT(*) as total FROM " . $this->tbl_name . " WHERE status = 'Under Medical'";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['total'];
-        } else {
-            return 0;
-        }
-    }
-    
+   
+ 
 }
 ?>

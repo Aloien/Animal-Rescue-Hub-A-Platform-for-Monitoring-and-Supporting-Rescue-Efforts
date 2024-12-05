@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $species = $_POST['species'] ?? null;
     $age = $_POST['age'] ?? null;
     $description = $_POST['description'] ?? null;
-    $status = $_POST['status'] ?? null;
+    
+    // Set default status to 'pending'
+    $status = 'pending';
 
     // Handle file upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
@@ -41,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $image = null;
     }
 
-    if ($animal && $species && $age && $description && $image && $status) {
+    if ($animal && $species && $age && $description && $image) {
         $animals->create($animal, $species, $age, $description, $image, $status);
         echo "
         <!DOCTYPE html>
@@ -94,15 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label for="description">Description:</label>
         <textarea id="description" name="description" required></textarea><br>
-
-        <label for="status">Status:</label>
-        <select id="status" name="status" required>
-            <option value="in facility">In Facility</option>
-            <option value="adopted">Adopted</option>
-            <option value="released">Released</option>
-            <option value="pending">Pending</option>
-            <option value="rescued">Rescued</option>
-        </select><br>
 
         <label for="image">Image:</label>
         <input type="file" id="image" name="image" required><br>

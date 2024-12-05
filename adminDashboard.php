@@ -24,12 +24,6 @@ $crudAdoption = new Adoption($pdo);
 $adoptions = $crudAdoption->getAdoptions();
 $incident = new Incident($pdo);
 $incidents = $incident->read();
-
-// Fetch adoption requests
-$query = "SELECT * FROM adoption_request";
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-$adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -91,11 +85,11 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['phone']); ?></td>
                         <td class="action-buttons">
-                            <form method="GET" action="edit.php" style="display:inline;">
+                            <form method="GET" action="editUser.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>">
                                 <button type="submit" class="btn btn-success">Edit</button>
                             </form>
-                            <form method="POST" action="delete.php" style="display:inline;">
+                            <form method="POST" action="deleteUser.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>">
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                             </form>
@@ -107,18 +101,12 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="container mt-4">
-        <h2>Animal and Incident List</h2>
-        <a href="animalForms.php" class="btn btn-primary mb-3">Add Animal</a>
+        <h2>Incident List</h2>
         <table id="animalIncidentTable" class="table table-striped display">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Type</th>
-                    <th>Name</th>
                     <th>Animal Type</th>
-                    <th>Species</th>
-                    <th>Location</th>
-                    <th>Age</th>
                     <th>Date</th>
                     <th>Description</th>
                     <th>Image</th>
@@ -128,50 +116,10 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $animals->fetch(PDO::FETCH_ASSOC)): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td>Animal</td>
-                        <td><?php echo htmlspecialchars($row['animal']); ?></td>
-                        <td>N/A</td>
-                        <td><?php echo htmlspecialchars($row['species']); ?></td>
-                        <td>N/A</td>
-                        <td><?php echo htmlspecialchars($row['age']); ?></td>
-                        <td>N/A</td>
-                        <td><?php echo htmlspecialchars($row['description']); ?></td>
-                        <td>
-                            <?php if ($row['image']): ?>
-                                <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image" style="max-width: 100px;">
-                            <?php endif; ?>
-                        </td>
-                        <td><?php echo htmlspecialchars($row['status']); ?></td>
-                        <td><?php echo htmlspecialchars($row['geolocation']); ?></td>
-                        <td class="action-buttons">
-                            <form method="POST" action="updateAnimalStatus.php" style="display:inline;">
-                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                <input type="hidden" name="status" value="for adoption">
-                                <button type="submit" class="btn btn-primary">Mark for Adoption</button>
-                            </form>
-                            <form method="GET" action="editAnimal.php" style="display:inline;">
-                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                <button type="submit" class="btn btn-success">Edit</button>
-                            </form>
-                            <form method="POST" action="deleteAnimal.php" style="display:inline;">
-                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this animal?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
                 <?php while ($row = $incidents->fetch(PDO::FETCH_ASSOC)): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td>Incident</td>
-                        <td>N/A</td>
                         <td><?php echo htmlspecialchars($row['animal_type']); ?></td>
-                        <td>N/A</td>
-                        <td><?php echo htmlspecialchars($row['location']); ?></td>
-                        <td>N/A</td>
                         <td><?php echo htmlspecialchars($row['date']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
                         <td>
@@ -180,12 +128,16 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php endif; ?>
                         </td>
                         <td><?php echo htmlspecialchars($row['status']); ?></td>
-                        <td><?php echo htmlspecialchars($row['geolocation']); ?></td>
+                        <td> <?php if (!empty($row['geolocation'])): ?>
+                                <?php list($lat, $lon) = explode(',', $row['geolocation']); ?>
+                                <button onclick="window.open('https://www.google.com/maps?q=<?php echo $lat; ?>,<?php echo $lon; ?>', '_blank')">Locate</button>
+                            <?php endif; ?>
+                        </td>
                         <td class="action-buttons">
-                            <form method="POST" action="updateIncidentStatus.php" style="display:inline;">
+                            <form method="POST" action="animalForms.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
                                 <input type="hidden" name="status" value="for adoption">
-                                <button type="submit" class="btn btn-primary">Mark for Adoption</button>
+                                <button type="submit" class="btn btn-primary">Mark Animal for Adoption</button>
                             </form>
                             <form method="GET" action="editIncident.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
@@ -204,44 +156,45 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="container mt-4">
         <h2>Animals Ready for Adoption</h2>
-        <a href="createAdoption.php" class="btn btn-primary mb-3">Add Animal for Adoption</a>
         <table id="adoptionTable" class="table table-striped display">
             <thead>
                 <tr>
-                    <th>ID</th> 
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Contact Number</th>
-                    <th>Monthly Salary</th>
-                    <th>Animal ID</th>
-                    <th>Pet Type</th>
+                    <th>ID</th>
+                    <th>Animal Name</th>
+                    <th>Species</th>
+                    <th>Age</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                foreach ($adoptions as $adoption) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($adoption['id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($adoption['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($adoption['gender']) . "</td>";
-                    echo "<td>" . htmlspecialchars($adoption['contact']) . "</td>";
-                    echo "<td>" . htmlspecialchars($adoption['monthly_salary']) . "</td>";
-                    echo "<td>" . htmlspecialchars($adoption['animal_id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($adoption['pet_type']) . "</td>";
-                    echo "<td class='action-buttons'>
-                        <form method='GET' action='editAdoption.php' style='display:inline;'>
-                            <input type='hidden' name='id' value='" . htmlspecialchars($adoption['id']) . "'>
-                            <button type='submit' class='btn btn-success'>Edit</button>
-                        </form>
-                        <form method='POST' action='deleteAdoption.php' style='display:inline;'>
-                            <input type='hidden' name='id' value='" . htmlspecialchars($adoption['id']) . "'>
-                            <button type='submit' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this adoption?\")'>Delete</button>
-                        </form>
-                    </td>";
-                    echo "</tr>";
-                }
-                ?>
+            <?php while ($row = $animals->fetch(PDO::FETCH_ASSOC)): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['animal']); ?></td>
+                        <td><?php echo htmlspecialchars($row['species']); ?></td>
+                        <td><?php echo htmlspecialchars($row['age']); ?></td>
+                        <td><?php echo htmlspecialchars($row['description']); ?></td>
+                        <td>
+                            <?php if ($row['image']): ?>
+                                <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image" style="max-width: 100px;">
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo htmlspecialchars($row['status']); ?></td>
+                        <td class="action-buttons">
+                            <form method="GET" action="editAnimal.php" style="display:inline;">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                <button type="submit" class="btn btn-success">Edit</button>
+                            </form>
+                            <form method="POST" action="deleteAnimal.php" style="display:inline;">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this animal?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
             </tbody>
         </table>
     </div>
@@ -251,29 +204,29 @@ $adoptionRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <table id="adoptionRequestTable" class="table table-striped display">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Animal ID</th>
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Contact</th>
                     <th>Monthly Salary</th>
-                    <th>Pet Type</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                foreach ($adoptionRequests as $request) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($request['id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($request['animal_id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($request['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($request['gender']) . "</td>";
-                    echo "<td>" . htmlspecialchars($request['contact']) . "</td>";
-                    echo "<td>" . htmlspecialchars($request['monthly_salary']) . "</td>";
-                    echo "<td>" . htmlspecialchars($request['pet_type']) . "</td>";
-                    echo "</tr>";
-                }
-                ?>
+            <?php foreach ($adoptions as $adoption): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($adoption['animal_id']); ?></td>
+                        <td><?php echo htmlspecialchars($adoption['name']); ?></td>
+                        <td><?php echo htmlspecialchars($adoption['gender']); ?></td>
+                        <td><?php echo htmlspecialchars($adoption['contact']); ?></td>
+                        <td><?php echo htmlspecialchars($adoption['monthly_salary']); ?></td>
+                        <td class="action-buttons">
+                            <form method="POST" action="deleteAdoption.php" style="display:inline;">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($adoption['id']); ?>">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

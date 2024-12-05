@@ -64,7 +64,7 @@ $stmt = $animal->read();
 <body>
 
 
-    <h2>Animal List</h2>
+    <h2>Adoption Status</h2>
 
 
     <table id="animalTable">
@@ -76,7 +76,7 @@ $stmt = $animal->read();
                 <th>Age</th>
                 <th>Description</th>
                 <th>Image</th>
-                <th>Status</th> <!-- Add status column -->
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>

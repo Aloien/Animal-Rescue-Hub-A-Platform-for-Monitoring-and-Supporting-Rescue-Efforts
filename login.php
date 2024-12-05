@@ -25,7 +25,7 @@ if (isset($_POST["submit"])) {
         // User login successful
         $_SESSION["loginEmail"] = $regular_user['email'];
         $_SESSION["role"] = 'user';
-        header("Location: dashboard.php");
+        header("Location: UserDashboard.php");
         exit();
     } else {
         echo "<script>alert('Incorrect Email or Password');</script>";
@@ -89,7 +89,7 @@ if (isset($_POST["submit"])) {
             <button type="submit" name="submit" class="btn btn-primary w-100">Login</button>
         </form>
         <hr>
-        <p class="text-center">Don't have an account? <a href="register.php">Register here</a></p>
+        <p class="text-center">Don't have an account? <a href="registerUser.php">Register here</a></p>
     </div>
 
 </body>

@@ -15,7 +15,6 @@ if (isset($_GET['id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $incident->animal_type = htmlspecialchars(trim($_POST['animal_type']));
-    $incident->location = htmlspecialchars(trim($_POST['location']));
     $incident->date = htmlspecialchars(trim($_POST['date'] . ' ' . $_POST['time'])); // Combine date and time
     $incident->description = htmlspecialchars(trim($_POST['description']));
     $incident->status = htmlspecialchars(trim($_POST['status']));
@@ -115,9 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" value="<?php echo htmlspecialchars($incidentData['animal_type']); ?>" required><br><br>
         
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($incidentData['location']); ?>" required><br><br>
-        
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" value="<?php echo htmlspecialchars(explode(' ', $incidentData['date'])[0]); ?>" required><br><br>
         
@@ -132,8 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="in facility" <?php echo ($incidentData['status'] == 'in facility') ? 'selected' : ''; ?>>In Facility</option>
             <option value="adopted" <?php echo ($incidentData['status'] == 'adopted') ? 'selected' : ''; ?>>Adopted</option>
             <option value="released" <?php echo ($incidentData['status'] == 'released') ? 'selected' : ''; ?>>Released</option>
-            <option value="pending" <?php echo ($incidentData['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
-            <option value="rescued" <?php echo ($incidentData['status'] == 'rescued') ? 'selected' : ''; ?>>Rescued</option>
+            <option value="under_medical" <?php echo ($incidentData['status'] == 'under_medical') ? 'selected' : ''; ?>>Under Medical</option>
         </select><br><br>
 
         <label for="image">Image:</label>
