@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <a href="adminDashboard.php" class="back-button" style="position: absolute; top: 10px; left: 10px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; text-decoration: none;">Back</a>
     <h1>Add New Animal</h1>
     <form action="addAnimal.php" method="POST" enctype="multipart/form-data">
         <label for="animal">Animal Name:</label>

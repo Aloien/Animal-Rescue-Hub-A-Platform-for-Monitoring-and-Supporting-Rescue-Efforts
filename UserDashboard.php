@@ -29,10 +29,11 @@ if(!isset($_SESSION["loginEmail"])) {
             top: 0;
             width: 100%;
             z-index: 1030;
+            transition: top 0.3s;
         }
         main {
             flex: 1;
-            margin-top: 56px; /* Adjust based on header height */
+            margin-top: 56px;
         }
         .navbar {
             background-color: #032f30;
@@ -53,7 +54,7 @@ if(!isset($_SESSION["loginEmail"])) {
             color: #0c969c;
         }
         .jumbotron {
-            background-image: url('path_to_animal_image.jpg');
+            background-image: url('wildlife-header.jpg');
             background-size: cover;
             background-position: center;
             color: #f5f5f5;
@@ -137,5 +138,18 @@ if(!isset($_SESSION["loginEmail"])) {
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let lastScrollTop = 0;
+        window.addEventListener("scroll", function() {
+            let header = document.querySelector("header");
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                header.style.top = "-100px"; // Adjust this value based on header height
+            } else {
+                header.style.top = "0";
+            }
+            lastScrollTop = scrollTop;
+        });
+    </script>
 </body>
 </html>

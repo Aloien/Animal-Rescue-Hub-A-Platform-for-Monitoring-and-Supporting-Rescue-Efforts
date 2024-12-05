@@ -5,11 +5,10 @@ require_once 'classes/crudAnimal.php';
 $database = new Database();
 $db = $database->getConnect();
 
-
 $animal = new Animals($db);
 
-// Query to filter only specific species
-$query = "SELECT * FROM animals_table WHERE species IN ('Cat', 'Dog', 'Rabbit', 'Guinea Pig', 'Hamster')";
+// Query to select all animals
+$query = "SELECT * FROM animals_table";
 $stmt = $db->prepare($query);
 $stmt->execute();
 ?>
@@ -36,20 +35,30 @@ $stmt->execute();
             font-family: Arial, sans-serif;
         }
 
-        table {
-            width: 80%; /* Updated width */
-            margin: 20px 0;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
+        .animal-card {
+            width: 300px;
             border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px;
+            padding: 10px;
+            text-align: center;
         }
 
-        button {
-            padding: 10px; 
+        .animal-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .animal-card h3 {
+            margin: 10px 0;
+        }
+
+        .animal-card p {
+            margin: 5px 0;
+        }
+
+        .animal-card button {
+            padding: 10px;
             background-color: #007bff;
             color: white;
             border: none;
@@ -57,65 +66,57 @@ $stmt->execute();
             cursor: pointer;
         }
 
-        button:hover {
+        .animal-card button:hover {
             background-color: #0056b3;
         }
 
-        img {
-            max-width: 100px;
-        }
-
         .container {
-            width: 80%;
-            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         h2 {
             text-align: center;
         }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .header h2 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <button onclick="window.location.href='userDashboard.php'" style="align-self: flex-start;">Back</button>
+    <div class="header">
         <h2>Adoptable Animals</h2>
-
-        <table id="animalTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Species</th>
-                    <th>Age</th>
-                    <th>Description</th>
-                    <th>Image</th>
-                    <th>Adopt</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['animal']); ?></td>
-                        <td><?php echo htmlspecialchars($row['species']); ?></td>
-                        <td><?php echo htmlspecialchars($row['age']); ?></td>
-                        <td><?php echo htmlspecialchars($row['description']); ?></td>
-                        <td>
-                            <?php if ($row['image']): ?>
-                                <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image">
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <form action="adoptionForms.php" method="GET">
-                                <input type="hidden" name="animal_id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                <button type="submit">Adopt</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+        <button onclick="window.location.href='userDashboard.php'">Back</button>
+    </div>
+    <div class="container">
+        <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+            <div class="animal-card">
+                <?php if ($row['image']): ?>
+                    <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image">
+                <?php endif; ?>
+                <h3><?php echo htmlspecialchars($row['animal']); ?></h3>
+                <p><strong>Species:</strong> <?php echo htmlspecialchars($row['species']); ?></p>
+                <p><strong>Age:</strong> <?php echo htmlspecialchars($row['age']); ?></p>
+                <p><?php echo htmlspecialchars($row['description']); ?></p>
+                <form action="adoptionForms.php" method="GET">
+                    <input type="hidden" name="animal_id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                    <button type="submit">Adopt</button>
+                </form>
+            </div>
+        <?php endwhile; ?>
     </div>
 
     <script>
@@ -126,4 +127,3 @@ $stmt->execute();
 </body>
 
 </html>
-

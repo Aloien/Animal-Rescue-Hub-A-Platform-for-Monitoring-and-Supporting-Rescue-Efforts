@@ -103,14 +103,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Incident</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        form {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h2>Edit Incident</h2>
+    <a href="adminDashboard.php" class="back-button">Back</a>
     <form action="editIncident.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($incidentData['id']); ?>">
         <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($incidentData['image']); ?>">
         <input type="hidden" id="geolocation" name="geolocation" value="<?php echo htmlspecialchars($incidentData['geolocation']); ?>">
 
+        <h2>Edit Incident</h2>
         <label for="animal_type">Animal Type:</label>
         <input type="text" id="animal_type" name="animal_type" value="<?php echo htmlspecialchars($incidentData['animal_type']); ?>" required><br><br>
         

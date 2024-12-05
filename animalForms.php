@@ -71,7 +71,8 @@ $stmt = $animal->read();
 
 
 <body>
-   <h1>Add Animal</h1>
+   <a href="adminDashboard.php" class="back-button" style="position: absolute; top: 10px; left: 10px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; text-decoration: none;">Back</a>
+   <h1>Animal for Adoption</h1>
 
    <form method="POST" action="addAnimal.php" enctype="multipart/form-data">
        <label for="animal">Name:</label>
