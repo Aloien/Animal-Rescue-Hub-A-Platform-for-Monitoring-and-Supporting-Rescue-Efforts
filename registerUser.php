@@ -95,7 +95,7 @@ if (isset($_POST["submit"])) {
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Register</h2>
-        <form action="register.php" method="post" onsubmit="return validateForm()">
+        <form action="registerUser.php" method="post" onsubmit="return validateForm()">
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>

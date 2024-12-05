@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/dbconnection.php';
+require_once 'classes/dbConnection.php';
 
 class Adoption
 {
@@ -13,7 +13,6 @@ class Adoption
     public $gender;
     public $contact;
     public $monthly_salary;
-    public $pet_type;
 
     public function __construct() {
         $db = new Database();
@@ -22,8 +21,8 @@ class Adoption
 
     // Create a new adoption form entry
     public function create() {
-        $query = "INSERT INTO " . $this->tbl_name . " (animal_id, name, gender, contact, monthly_salary, pet_type) 
-                  VALUES (:animal_id, :name, :gender, :contact, :monthly_salary, :pet_type)";
+        $query = "INSERT INTO " . $this->tbl_name . " (animal_id, name, gender, contact, monthly_salary) 
+                  VALUES (:animal_id, :name, :gender, :contact, :monthly_salary)";
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
@@ -32,7 +31,6 @@ class Adoption
         $stmt->bindParam(':gender', $this->gender);
         $stmt->bindParam(':contact', $this->contact);
         $stmt->bindParam(':monthly_salary', $this->monthly_salary);
-        $stmt->bindParam(':pet_type', $this->pet_type);
 
         // Execute the query
         return $stmt->execute();
@@ -57,7 +55,7 @@ class Adoption
     // Update an adoption form entry by ID
     public function update($id) {
         $query = "UPDATE " . $this->tbl_name . " 
-                  SET animal_id = :animal_id, name = :name, gender = :gender, contact = :contact, monthly_salary = :monthly_salary, pet_type = :pet_type 
+                  SET animal_id = :animal_id, name = :name, gender = :gender, contact = :contact, monthly_salary = :monthly_salary 
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
@@ -68,7 +66,6 @@ class Adoption
         $stmt->bindParam(':gender', $this->gender);
         $stmt->bindParam(':contact', $this->contact);
         $stmt->bindParam(':monthly_salary', $this->monthly_salary);
-        $stmt->bindParam(':pet_type', $this->pet_type);
 
         // Execute the query
         return $stmt->execute();

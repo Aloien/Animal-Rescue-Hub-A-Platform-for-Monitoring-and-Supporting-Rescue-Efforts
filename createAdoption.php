@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adoptionForm->gender = htmlspecialchars(trim($_POST['gender']));
     $adoptionForm->contact = htmlspecialchars(trim($_POST['contact']));
     $adoptionForm->monthly_salary = htmlspecialchars(trim($_POST['monthly_salary']));
-    $adoptionForm->pet_type = htmlspecialchars(trim($_POST['pet_type']));
 
     // Check if the animal_id exists in the animals_table
     $animal = $crudAnimal->getAnimalById($adoptionForm->animal_id);
