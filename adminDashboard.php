@@ -200,36 +200,42 @@ $incidents = $incident->read();
     </div>
 
     <div class="container mt-4">
-        <h2>Adoption Requests</h2>
-        <table id="adoptionRequestTable" class="table table-striped display">
-            <thead>
-                <tr>
-                    <th>Animal ID</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Contact</th>
-                    <th>Monthly Salary</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($adoptions as $adoption): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($adoption['animal_id']); ?></td>
-                        <td><?php echo htmlspecialchars($adoption['name']); ?></td>
-                        <td><?php echo htmlspecialchars($adoption['gender']); ?></td>
-                        <td><?php echo htmlspecialchars($adoption['contact']); ?></td>
-                        <td><?php echo htmlspecialchars($adoption['monthly_salary']); ?></td>
-                        <td class="action-buttons">
-                            <form method="POST" action="deleteAdoption.php" style="display:inline;">
-                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($adoption['id']); ?>">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+    <h2>Adoption Requests</h2>
+    <table id="adoptionRequestTable" class="table table-striped display">
+        <thead>
+            <tr>
+                <th>Animal ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th>Monthly Salary</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($adoptions as $adoption): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($adoption['animal_id']); ?></td>
+                <td><?php echo htmlspecialchars($adoption['name']); ?></td>
+                <td><?php echo htmlspecialchars($adoption['gender']); ?></td>
+                <td><?php echo htmlspecialchars($adoption['contact']); ?></td>
+                <td><?php echo htmlspecialchars($adoption['monthly_salary']); ?></td>
+                <td class="action-buttons">
+                    <form method="POST" action="approveAdoption.php" style="display:inline;">
+                        <input type="hidden" name="animal_id" value="<?php echo htmlspecialchars($adoption['animal_id']); ?>">
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to approve this adoption?')">Approve</button>
+                    </form>
+                    <form method="POST" action="deleteAdoption.php" style="display:inline;">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($adoption['id']); ?>">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this request?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
 
     <script>
         $(document).ready(function() {
