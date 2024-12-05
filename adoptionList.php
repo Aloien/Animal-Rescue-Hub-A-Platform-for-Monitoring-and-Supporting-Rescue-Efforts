@@ -37,7 +37,7 @@ $stmt->execute();
         }
 
         table {
-            width: 80%;
+            width: 80%; /* Updated width */
             margin: 20px 0;
             border-collapse: collapse;
         }
@@ -49,7 +49,7 @@ $stmt->execute();
         }
 
         button {
-            padding: 8px 12px;
+            padding: 10px; 
             background-color: #007bff;
             color: white;
             border: none;
@@ -64,47 +64,59 @@ $stmt->execute();
         img {
             max-width: 100px;
         }
+
+        .container {
+            width: 80%;
+            margin: 20px 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <h2>Adoptable Animals</h2>
+    <div class="container">
+        <button onclick="window.location.href='userDashboard.php'" style="align-self: flex-start;">Back</button>
+        <h2>Adoptable Animals</h2>
 
-    <table id="animalTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Species</th>
-                <th>Age</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Adopt</th> <!-- Add Adopt column -->
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+        <table id="animalTable">
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['id']); ?></td>
-                    <td><?php echo htmlspecialchars($row['animal']); ?></td>
-                    <td><?php echo htmlspecialchars($row['species']); ?></td>
-                    <td><?php echo htmlspecialchars($row['age']); ?></td>
-                    <td><?php echo htmlspecialchars($row['description']); ?></td>
-                    <td>
-                        <?php if ($row['image']): ?>
-                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image">
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <form action="adoptionForms.php" method="GET">
-                            <input type="hidden" name="animal_id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                            <button type="submit">Adopt</button>
-                        </form>
-                    </td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Species</th>
+                    <th>Age</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Adopt</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['animal']); ?></td>
+                        <td><?php echo htmlspecialchars($row['species']); ?></td>
+                        <td><?php echo htmlspecialchars($row['age']); ?></td>
+                        <td><?php echo htmlspecialchars($row['description']); ?></td>
+                        <td>
+                            <?php if ($row['image']): ?>
+                                <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image">
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <form action="adoptionForms.php" method="GET">
+                                <input type="hidden" name="animal_id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                <button type="submit">Adopt</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 
     <script>
         $(document).ready(function() {

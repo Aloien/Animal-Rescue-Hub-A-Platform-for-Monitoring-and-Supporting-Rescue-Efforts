@@ -64,7 +64,7 @@ $stmt = $incident->read();
         }
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 100%; /* Updated width */
         }
         th, td {
             padding: 10px;
@@ -79,9 +79,23 @@ $stmt = $incident->read();
                 max-width: 100%;
             }
         }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </head>
 <body>
+    <a href="userDashboard.php" class="back-button">Back</a>
     <h1>Incident Report</h1>
 
     <form action="createIncident.php" method="post" enctype="multipart/form-data" onsubmit="return setGeolocation()">

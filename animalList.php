@@ -45,7 +45,7 @@ $stmt = $animal->read();
 
 
         table {
-            width: 80%;
+            width: 80%; /* Updated width */
             margin: 20px 0;
             border-collapse: collapse;
         }
@@ -57,46 +57,73 @@ $stmt = $animal->read();
             text-align: left;
             border: 1px solid #ddd;
         }
+
+        img {
+            max-width: 100px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px; 
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
 
 <body>
+    <div class="container">
+        <button onclick="window.location.href='userDashboard.php'" style="align-self: flex-start;">Back</button>
+        <h2>Adoption Status</h2>
 
 
-    <h2>Adoption Status</h2>
-
-
-    <table id="animalTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Species</th>
-                <th>Age</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+        <table id="animalTable">
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['id']); ?></td>
-                    <td><?php echo htmlspecialchars($row['animal']); ?></td>
-                    <td><?php echo htmlspecialchars($row['species']); ?></td>
-                    <td><?php echo htmlspecialchars($row['age']); ?></td>
-                    <td><?php echo htmlspecialchars($row['description']); ?></td>
-                    <td>
-                        <?php if ($row['image']): ?>
-                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image" style="max-width: 100px;">
-                        <?php endif; ?>
-                    </td>
-                    <td><?php echo htmlspecialchars($row['status']); ?></td> <!-- Display status -->
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Species</th>
+                    <th>Age</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Status</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['animal']); ?></td>
+                        <td><?php echo htmlspecialchars($row['species']); ?></td>
+                        <td><?php echo htmlspecialchars($row['age']); ?></td>
+                        <td><?php echo htmlspecialchars($row['description']); ?></td>
+                        <td>
+                            <?php if ($row['image']): ?>
+                                <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Animal Image">
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo htmlspecialchars($row['status']); ?></td> <!-- Display status -->
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 
 
     <script>

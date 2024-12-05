@@ -18,8 +18,21 @@ if(!isset($_SESSION["loginEmail"])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             padding-top: 56px;
             background-color: #f5f5f5;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+        main {
+            flex: 1;
+            margin-top: 56px; /* Adjust based on header height */
         }
         .navbar {
             background-color: #032f30;
@@ -84,7 +97,7 @@ if(!isset($_SESSION["loginEmail"])) {
 <!-- Header -->
     <header class="jumbotron text-center bg-dark bg-opacity-50">
         <div class="container">
-            <h1 class="display-4">Welcome to Animal Rescue Hub!</h1>
+            <h1 class="display-4">Welcome to Animal Rescue Hub Dashboard!</h1>
         </div>
     </header>
 
@@ -93,25 +106,23 @@ if(!isset($_SESSION["loginEmail"])) {
         <div class="row my-5">
             <div class="col-md-3">
                 <nav class="nav flex-column">
-                    <a class="nav-link btn btn-primary mb-2" href="incidentForms.php">Incident</a>
-                    <a class="nav-link btn btn-primary mb-2" href="adoptionList.php">Adoption</a>
-                    <a class="nav-link btn btn-primary mb-2" href="animalList.php">Adoption Status</a>
+                    <a class="nav-link btn btn-primary mb-2" href="incidentForms.php">Report an Incident</a>
+                    <a class="nav-link btn btn-primary mb-2" href="adoptionList.php">Adopt an Animal</a>
+                    <a class="nav-link btn btn-primary mb-2" href="animalList.php">Check Adoption Status</a>
                     <a class="nav-link btn btn-primary mb-2" href="overview.php">Overview</a>
                     <a class="nav-link btn btn-primary mb-2" href="contactUs.php">Contact Us</a>
                     <a class="nav-link btn btn-secondary" href="logout.php">Logout</a>
                 </nav>
             </div>
             <div class="col-md-9">
-                <button onclick="history.back()" class="btn btn-secondary mb-3">Back</button>
-                <div style="background-image: url('path_to_animal_image.jpg'); height: 500px; background-size: cover;">
-                    <!-- Additional content can go here -->
+                <div style="background-image: url('backgroundImages/userDashboard.jpg'); height: 500px; background-size: cover;">
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="py-4">
+    <footer class="py-4 mt-auto">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
