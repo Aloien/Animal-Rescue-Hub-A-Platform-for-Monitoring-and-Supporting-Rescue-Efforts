@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <?php if (isset($user)): ?>
 <h2>Edit User</h2>
-<form action="edit.php" method="post">
+<form action="editUser.php" method="post">
     <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>">
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required><br><br>
