@@ -19,7 +19,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adoptionForm->name = htmlspecialchars(trim($_POST['name']));
     $adoptionForm->gender = htmlspecialchars(trim($_POST['gender']));
     $adoptionForm->contact = htmlspecialchars(trim($_POST['contact']));
-    $adoptionForm->monthly_salary = htmlspecialchars(trim($_POST['monthly_salary']));
+    $salaryRange = htmlspecialchars(trim($_POST['monthly_salary']));
+
+    // Convert salary range to numeric value
+    switch ($salaryRange) {
+        case 'Less than 10,000':
+            $adoptionForm->monthly_salary = 5000;
+            break;
+        case '10,000 - 20,000':
+            $adoptionForm->monthly_salary = 15000;
+            break;
+        case '20,000 - 30,000':
+            $adoptionForm->monthly_salary = 25000;
+            break;
+        case '30,000 - 40,000':
+            $adoptionForm->monthly_salary = 35000;
+            break;
+        case '40,000 - 50,000':
+            $adoptionForm->monthly_salary = 45000;
+            break;
+        case 'More than 50,000':
+            $adoptionForm->monthly_salary = 60000;
+            break;
+        default:
+            $adoptionForm->monthly_salary = 0;
+    }
 
     // Check if the animal_id exists in the animals_table
     $animal = $crudAnimal->getAnimalById($adoptionForm->animal_id);

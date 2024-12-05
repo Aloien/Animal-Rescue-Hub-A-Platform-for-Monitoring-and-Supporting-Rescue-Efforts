@@ -36,6 +36,9 @@ $totalUnderMedical = $crudIncident->getTotalUnderMedical();
 </head>
 <body>
     <div class="container mt-5">
+        <div class="text-start mb-4">
+            <button onclick="window.location.href='userDashboard.php'" class="btn btn-secondary">Back</button>
+        </div>
         <h2 class="text-center mb-4">Animal Rescue Statistics</h2>
         <div class="chart-container">
             <canvas id="animalChart"></canvas>

@@ -7,9 +7,17 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        html, body {
+            height: 100%;
+        }
         body {
+            display: flex;
+            flex-direction: column;
             padding-top: 56px;
             background-color: #f5f5f5;
+        }
+        main {
+            flex: 1;
         }
         .navbar {
             background-color: #032f30;
@@ -111,9 +119,9 @@
         </section>
         <section class="my-5">
             <h2 class="text-center section-title">Support Us</h2>
-            <p class="text-center">We rely on the generosity of our supporters. Learn how you can donate, volunteer, or participate in our fundraising events.</p>
+            <p class="text-center">We rely on the generosity of our supporters. Learn how you can donate.</p>
             <div class="text-center">
-                <a href="support.html" class="btn btn-secondary">Learn More</a>
+                <a href="supportUs.php" class="btn btn-secondary">Learn More</a>
             </div>
         </section>
     </main>
