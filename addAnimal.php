@@ -4,9 +4,9 @@ require_once 'classes/dbConnection.php';
 require_once 'classes/crudAnimal.php';
 
 $database = new Database();
-$pdo = $database->getConnect();
+$db = $database->getConnect();
 
-$animals = new Animals($pdo);
+$animals = new Animals($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $animal = $_POST['animal'] ?? null;
