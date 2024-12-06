@@ -7,6 +7,9 @@ $db = $database->getConnect();
 
 $incident = new Incident($db);
 
+$incidentData = null;
+$updateSuccess = false;
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $incidentData = $incident->getIncidentById($id);
@@ -48,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($incident->update($id)) {
+        $updateSuccess = true;
         echo "
         <!DOCTYPE html>
         <html lang='en'>
@@ -95,6 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </html>";
     }
 }
+
+if (!$updateSuccess && isset($incidentData)):
 ?>
 
 <!DOCTYPE html>
@@ -169,3 +175,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 </body>
 </html>
+<?php endif; ?>
