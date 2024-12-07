@@ -65,7 +65,6 @@ $incidents = $incident->read();
     </header>
 
     <div class="container mt-4">
-        <button onclick="history.back()" class="btn btn-secondary mb-3">Back</button>
         <h2>Users List</h2>
         <table id="userTable" class="table table-striped display">
             <thead>
