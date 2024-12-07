@@ -113,9 +113,6 @@
         <section class="my-5">
             <h2 class="text-center section-title">Adopt a Pet</h2>
             <p class="text-center">Find your new best friend from our wide selection of rescued animals. Each one is looking for a loving home just like yours.</p>
-            <div class="text-center">
-                <a href="adoptionList.php" class="btn btn-primary">Browse Animals</a>
-            </div>
         </section>
         <section class="my-5">
             <h2 class="text-center section-title">Support Us</h2>
