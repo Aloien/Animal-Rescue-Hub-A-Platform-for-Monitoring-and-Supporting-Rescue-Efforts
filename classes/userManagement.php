@@ -54,8 +54,8 @@ class User {
         return false;
     }
 
-    // Retrieve user from the database by email
-    protected function getUserFromDatabase($email) {
+    // Retrieve admin from the database by email
+    protected function loginAdmin($email) {
         $query = "SELECT * FROM " . $this->tbl_name . " WHERE email = :email";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':email', $email);
@@ -104,8 +104,8 @@ class User {
 
 class Admin extends User {
     public function login($email, $password) {
-        // Retrieve user from the database
-        $user = $this->getUserFromDatabase($email);
+        // Retrieve admin from the database
+        $user = $this->loginAdmin($email);
         if ($user && $user['password'] === $password && $user['role'] === 'admin') {
             return ['email' => $email, 'role' => 'admin'];
         }
