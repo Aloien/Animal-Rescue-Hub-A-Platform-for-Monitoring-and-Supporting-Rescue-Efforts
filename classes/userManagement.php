@@ -102,9 +102,9 @@ class User {
     }
 }
 
+// Retrieve admin from the database
 class Admin extends User {
     public function login($email, $password) {
-        // Retrieve admin from the database
         $user = $this->loginAdmin($email);
         if ($user && $user['password'] === $password && $user['role'] === 'admin') {
             return ['email' => $email, 'role' => 'admin'];
