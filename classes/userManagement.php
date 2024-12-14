@@ -54,6 +54,15 @@ class User {
         return false;
     }
 
+    // Retrieve user from the database by email
+    protected function getUserFromDatabase($email) {
+        $query = "SELECT * FROM " . $this->tbl_name . " WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Read user by ID
     public function read() {
         $query = "SELECT * FROM " . $this->tbl_name . " WHERE id = :id";
@@ -95,7 +104,9 @@ class User {
 
 class Admin extends User {
     public function login($email, $password) {
-        if ($email === 'admin@gmail.com' && $password === 'admin') {
+        // Retrieve user from the database
+        $user = $this->getUserFromDatabase($email);
+        if ($user && $user['password'] === $password && $user['role'] === 'admin') {
             return ['email' => $email, 'role' => 'admin'];
         }
         return false; 
